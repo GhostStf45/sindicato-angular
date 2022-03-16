@@ -1,0 +1,89 @@
+
+<div class="register-page vsc-initialized" style="min-height: 496.8px; background-image: url(../../../assets/img/img1.png); background-size: cover;">
+  <div class="register-box" >
+    <div class="register-logo">
+      <a href="../../index2.html"> <img src="../../assets/img/template/logo_light.png" alt="AdminLTE Logo" width="200px" height="200px" class="rounded mx-auto d-block"></a>
+    </div>
+
+    <div class="card">
+      <div class="card-body register-card-body">
+        <p class="login-box-msg">Registrar un nuevo participante</p>
+
+        <form
+            method="post"
+            (ngSubmit) = "onSubmit(f)"
+            #f = "ngForm"
+
+        >
+
+          <div class="input-group mb-3">
+            <input type="email" class="form-control" placeholder="Email" [(ngModel)]="user.email" name="email">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-envelope"></span>
+              </div>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Nombres" [(ngModel)]="user.nombres" name="nombres">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-user"></span>
+              </div>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Apellidos" [(ngModel)]="user.apellidos" name="apellidos">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-user"></span>
+              </div>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="DNI" [(ngModel)]="user.dni" name="dni">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-user"></span>
+              </div>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Telefono" [(ngModel)]="user.telefono" name="telefono">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-user"></span>
+              </div>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <input type="password" class="form-control" placeholder="Password" [(ngModel)]="user.password" name="password">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-lock"></span>
+              </div>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <input type="password" class="form-control" placeholder="Retype password">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-lock"></span>
+              </div>
+            </div>
+          </div>
+            <!-- /.col -->
+            <div class="col-md-12">
+              <button type="submit" class="btn btn-primary btn-block">Register</button>
+            </div>
+            <!-- /.col -->
+        </form>
+        <div class="mt-4">
+          <a href="login.html" class="text-center mt-4">Ya soy participante</a>
+        </div>
+      </div>
+      <!-- /.form-box -->
+    </div><!-- /.card -->
+  </div>
+</div>
+<!-- /.register-box -->

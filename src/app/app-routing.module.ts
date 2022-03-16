@@ -5,11 +5,15 @@ import { PagesRoutingModule } from './pages/pages-routing.module';
 //componentes
 import { MainPageComponent } from './pages/main-page/main-page.component';
 import { LoginComponent } from './auth/login/login.component';
+import { RegisterComponent } from './auth/register/register.component';
 import { Error404Component } from './error404/error404.component';
+import { HomeComponent } from './guest-pages/home/home.component';
 
 const routes: Routes = [
-  {path: '', redirectTo: '/panel', pathMatch: 'full'},
+   {path: '', redirectTo: '/home', pathMatch: 'full'},
 	{ path: 'login', component: LoginComponent},
+	{ path: 'register', component: RegisterComponent},
+	{ path: 'home', component: HomeComponent},
   { path: '**', component: Error404Component}
 
 ];
