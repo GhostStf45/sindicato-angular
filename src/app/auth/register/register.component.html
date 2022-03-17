@@ -1,4 +1,3 @@
-
 <div class="register-page vsc-initialized" style="min-height: 496.8px; background-image: url(../../../assets/img/img1.png); background-size: cover;">
   <div class="register-box" >
     <div class="register-logo">
@@ -13,65 +12,144 @@
             method="post"
             (ngSubmit) = "onSubmit(f)"
             #f = "ngForm"
+            class="needs-validation"
+            novalidate
 
         >
 
           <div class="input-group mb-3">
-            <input type="email" class="form-control" placeholder="Email" [(ngModel)]="user.email" name="email">
+            <input type="email" class="form-control" placeholder="Email" [(ngModel)]="user.email" name="email" required email
+
+            (change)="validate(email)"
+            #email
+            >
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-envelope"></span>
               </div>
             </div>
+            <div class="valid-feedback">Valido.</div>
+            <div
+            *ngIf="f.submitted && f.controls['email'].errors"
+            class="invalid-feedback">Por favor, rellene el campo</div>
           </div>
           <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Nombres" [(ngModel)]="user.nombres" name="nombres">
+            <input type="text" class="form-control" placeholder="Nombres" [(ngModel)]="user.nombres" name="nombres"
+            minlength="2"
+            maxlength="20"
+            pattern="[A-Za-z]{2,20}"
+            data-toggle="tooltip"
+            data-placement="top"
+            title="Ingrese sus nombres con al menos 2 caracteres, maximo de 20 caracteres sin usar numeros"
+            required
+            (change)="validate(nombres)"
+            #nombres
+            >
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-user"></span>
               </div>
             </div>
+            <div class="valid-feedback">Valido.</div>
+            <div
+            *ngIf="f.submitted && f.controls['nombres'].errors"
+            class="invalid-feedback">Por favor, rellene el campo</div>
           </div>
           <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Apellidos" [(ngModel)]="user.apellidos" name="apellidos">
+            <input type="text" class="form-control" placeholder="Apellidos" [(ngModel)]="user.apellidos" name="apellidos"
+              minlength="2"
+              maxlength="20"
+              pattern="[A-Za-z]{2,20}"
+              data-toggle="tooltip"
+              data-placement="top"
+              title="Ingrese sus apellidos con al menos 2 caracteres, maximo de 20 caracteres sin usar numeros"
+              required
+              (change)="validate(apellidos)"
+              #apellidos
+            >
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-user"></span>
               </div>
             </div>
+            <div class="valid-feedback">Valido.</div>
+            <div
+            *ngIf="f.submitted && f.controls['apellidos'].errors"
+            class="invalid-feedback">Por favor, rellene el campo</div>
           </div>
           <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="DNI" [(ngModel)]="user.dni" name="dni">
+            <input type="text" class="form-control" placeholder="DNI" [(ngModel)]="user.dni" name="dni"
+              minlength="8"
+              maxlength="8"
+              pattern="[1-9]{8,8}"
+              data-toggle="tooltip"
+              data-placement="top"
+              title="Su DNI debe de contener 8 cifras"
+              required
+              (change)="validate(dni)"
+              #dni
+            >
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-user"></span>
               </div>
             </div>
+            <div class="valid-feedback">Valido.</div>
+            <div
+            *ngIf="f.submitted && f.controls['dni'].errors"
+            class="invalid-feedback">Por favor, rellene el campo</div>
           </div>
           <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Telefono" [(ngModel)]="user.telefono" name="telefono">
+            <input type="text" class="form-control" placeholder="Telefono" [(ngModel)]="user.telefono" name="telefono"
+            minlength="9"
+            maxlength="9"
+            pattern="[1-9]{9,9}"
+            data-toggle="tooltip"
+            data-placement="top"
+            title="Su telefono debe de contener 9 cifras"
+            required
+            (change)="validate(telefono)"
+            #telefono
+            >
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-user"></span>
               </div>
             </div>
+            <div class="valid-feedback">Valid.</div>
+            <div
+            *ngIf="f.submitted && f.controls['telefono'].errors"
+            class="invalid-feedback">Por favor, rellene el campo</div>
           </div>
           <div class="input-group mb-3">
-            <input type="password" class="form-control" placeholder="Password" [(ngModel)]="user.password" name="password">
+            <input type="password" class="form-control" placeholder="Contraseña" [(ngModel)]="user.password" name="password"
+            required
+            minlength="4"
+            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,}"
+            data-toggle="tooltip"
+            title="Ingrese su contraseña con al menos 4 caracteres y debe incluir mayusculas, minusculas y numeros"
+            required
+            (change)="validate(password)"
+            #password
+            >
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-lock"></span>
               </div>
             </div>
+            <div class="valid-feedback">Valido.</div>
+            <div
+            *ngIf="f.submitted && f.controls['password'].errors"
+            class="invalid-feedback">Por favor, rellene el campo</div>
           </div>
-          <div class="input-group mb-3">
+          <!-- <div class="input-group mb-3">
             <input type="password" class="form-control" placeholder="Retype password">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-lock"></span>
               </div>
             </div>
-          </div>
+          </div> -->
             <!-- /.col -->
             <div class="col-md-12">
               <button type="submit" class="btn btn-primary btn-block">Register</button>
@@ -86,4 +164,3 @@
     </div><!-- /.card -->
   </div>
 </div>
-<!-- /.register-box -->
