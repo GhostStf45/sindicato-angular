@@ -114,7 +114,7 @@ export class RegisterComponent implements OnInit {
 
                   this.user.displayName = `${this.user.nombres} ${this.user.apellidos}`;
 
-                  this.user.idToken = resp['idToken'];
+
                   this.user.needConfirm = false;
 
                   this.usersService.registerDatabase(this.user)

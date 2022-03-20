@@ -15,3 +15,6 @@ export let SendEmailVerification = {
 export let ConfirmEmailVerification = {
   url: 'https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyACGsYD_RQ62dON-rMJhfNhHFEa355eV1E '
 }
+export let GetUserData = {
+  url: 'https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyACGsYD_RQ62dON-rMJhfNhHFEa355eV1E '
+}

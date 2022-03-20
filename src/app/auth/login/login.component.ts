@@ -71,6 +71,11 @@ export class LoginComponent implements OnInit {
                    }
                  })
               }
+          }, err => {
+            if( err.error.error.message == "INVALID_OOB_CODE"){
+
+              Swal.fire('Error', 'El correo ya fue confirmado', 'error');
+            }
           });
      }
   }
@@ -91,17 +96,37 @@ export class LoginComponent implements OnInit {
      // Validar que el correo esté verificado
 
     this.usersService.getFilterData("email", this.user.email)
-        .subscribe( resp => {
-          for(const i in resp){
-            if(resp[i].needConfirm){
+        .subscribe( resp1 => {
+          for(const i in resp1){
+            if(resp1[i].needConfirm){
                 // Login de firebase authentication
 
               this.user.returnSecureToken = true;
 
               this.usersService.loginAuth (this.user)
-                  .subscribe( resp => {
-                    Swal.close();
-                    console.log("resp", resp);
+                  .subscribe( resp2 => {
+                    /* ALMACENAR ID TOKEN */
+                    let id = Object.keys(resp1).toString();
+                   // this.user.idToken = resp2['idToken'];
+                    let value = {
+                      idToken: resp2["idToken"]
+                    };
+                    this.usersService.patchData(id, value)
+                      .subscribe( resp3 => {
+                        if(resp3['idToken'] != "" ){
+                          Swal.close();
+                          /* Almacenamos el token de seguridad en el localstorage */
+                          localStorage.setItem("idToken", (resp3["idToken"]));
+                          /* Almacenamos el email de seguridad en el localstorage */
+                          localStorage.setItem("email", (resp2["email"]));
+                          /* Almacenamos la fecha de expiracion en el localstorage */
+                          let today = new Date();
+                          today.setSeconds(resp2["expiresIn"]);
+                          localStorage.setItem("expiresIn", today.getTime().toString());
+
+                          window.open("home", "_top");
+                        }
+                    });
                   }, (err)=> {
                     Swal.fire("Error", err.error.error.message,"error");
                   });

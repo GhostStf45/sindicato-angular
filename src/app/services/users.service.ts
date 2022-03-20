@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Api, Register, Login, SendEmailVerification, ConfirmEmailVerification} from '../config';
+import {Api, Register, Login, SendEmailVerification, ConfirmEmailVerification, GetUserData} from '../config';
 import { UsersModel } from '../models/users.model';
+
+
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +15,7 @@ export class UsersService {
   private login:string = Login.url;
   private sendEmailVerification:string = SendEmailVerification.url;
   private confirmEmailVerification:string = ConfirmEmailVerification.url;
+  private getUserData:string = GetUserData.url;
 
 
   constructor(private http:HttpClient) {
@@ -50,6 +53,50 @@ export class UsersService {
   /* Actualizar data de usuario */
   patchData(id:string, value: object){
     return this.http.patch(`${this.api}usuarios/${id}.json`, value);
+  }
+  /* Validar idTOken */
+  authActivate(){
+    return new Promise(resolve =>{
+
+      if(localStorage.getItem("idToken")){
+        let body = {
+          idToken: localStorage.getItem("idToken")
+        }
+        this.http.post(`${this.getUserData}`, body)
+                  .subscribe( resp => {
+                    /* Validar la fecha de expiracion */
+
+                    if(localStorage.getItem("expiresIn")){
+                      let expiresIn = Number(localStorage.getItem("expiresIn"));
+                      let expiresDate = new Date();
+                      expiresDate.setTime(expiresIn);
+                      if(expiresDate > new Date()){
+                        resolve (true);
+                      }else{
+                        localStorage.removeItem("idToken");
+                        localStorage.removeItem("expiresIn");
+                        resolve (false);
+                      }
+
+                    }else{
+                      localStorage.removeItem("idToken");
+                      localStorage.removeItem("expiresIn");
+                      resolve(false);
+                    }
+
+                    resolve(true);
+                  },err => {
+                    localStorage.removeItem("idToken");
+                    localStorage.removeItem("expiresIn");
+                    resolve(false);
+                  });
+
+      }else{
+        localStorage.removeItem("idToken");
+        localStorage.removeItem("expiresIn");
+        resolve(false);
+      }
+    });
   }
 
 }
