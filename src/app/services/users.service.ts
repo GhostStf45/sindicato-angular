@@ -12,6 +12,9 @@ import {
   ConfirmPasswordReset
 } from '../config';
 import { UsersModel } from '../models/users.model';
+import { HomeComponent } from '../guest-pages/home/home.component';
+
+
 
 
 
@@ -31,9 +34,13 @@ export class UsersService {
   private confirmPasswordReset:string = ConfirmPasswordReset.url;
 
 
+  public tipoService:string = "";
+
+
   constructor(private http:HttpClient) {
 
    }
+
    /* Registro en firabase authentication */
    registerAuth(user:UsersModel){
      return this.http.post(`${this.register}`, user);
@@ -78,7 +85,6 @@ export class UsersService {
         this.http.post(`${this.getUserData}`, body)
                   .subscribe( resp => {
                     /* Validar la fecha de expiracion */
-
                     if(localStorage.getItem("expiresIn")){
                       let expiresIn = Number(localStorage.getItem("expiresIn"));
                       let expiresDate = new Date();
@@ -122,6 +128,12 @@ export class UsersService {
   /* Enviar la nueva contraseña */
   ConfirmPasswordResetFnc(body: object){
     return this.http.post(`${this.confirmPasswordReset}`, body);
+  }
+
+
+  get role(){
+    this.tipoService = localStorage.getItem('tipo');
+    return this.tipoService;
   }
 
 }

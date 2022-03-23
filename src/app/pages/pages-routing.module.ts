@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {AuthGuard} from '../guards/auth.guard';
+import {AfiliadosGuard} from '../guards/afiliados.guard';
 
 //componentes
 import { MainPageComponent } from './main-page/main-page.component';
@@ -22,7 +23,7 @@ const routes: Routes = [
 	  	{ path: 'disputes', loadChildren: () => import('./main-page/disputes/disputes.module').then(m=>m.DisputesModule)},
 	  	{ path: 'messages', loadChildren: () => import('./main-page/messages/messages.module').then(m=>m.MessagesModule)},
 
-	  ], canActivate: [AuthGuard]
+	  ], canActivate: [AfiliadosGuard]
   }
 
 ];

@@ -143,6 +143,7 @@ export class LoginComponent implements OnInit {
                     /* ALMACENAR ID TOKEN */
                     let id = Object.keys(resp1).toString();
                    // this.user.idToken = resp2['idToken'];
+
                     let value = {
                       idToken: resp2["idToken"]
                     };
@@ -154,7 +155,7 @@ export class LoginComponent implements OnInit {
                           localStorage.setItem("idToken", (resp3["idToken"]));
                           /* Almacenamos el email de seguridad en el localstorage */
                           localStorage.setItem("email", (resp2["email"]));
-                          /* Almacenamos la fecha de expiracion en el localstorage */
+                          /* Almacenamos el rol de seguridad en el localstorage */
                           let today = new Date();
                           today.setSeconds(resp2["expiresIn"]);
                           localStorage.setItem("expiresIn", today.getTime().toString());
@@ -223,7 +224,6 @@ export class LoginComponent implements OnInit {
     }
     this.usersService.ConfirmPasswordResetFnc(body)
         .subscribe( resp => {
-          console.log(resp);
           if(resp["requestType"] == "PASSWORD_RESET"){
             Swal.fire('!Cambio exitoso!', "Su contraseña ha sido cambiada correctamente", "success");
             window.open("login", "_top");

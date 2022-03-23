@@ -14,6 +14,10 @@ declare var $:any;
 })
 export class HomeComponent implements OnInit {
 
+  authValidate:boolean = false;
+  displayName:string = "";
+  tipo: string = "";
+
   constructor( private usersService: UsersService) { }
 
   ngOnInit(): void {
@@ -41,6 +45,35 @@ export class HomeComponent implements OnInit {
         //window.open("login", "_top");
       }
     });
+
+
+    /* validar si existe el usuario autenticado */
+    this.usersService.authActivate().then( resp => {
+      if(resp){
+        this.authValidate =true;
+        this.usersService.getFilterData("idToken", localStorage.getItem("idToken"))
+            .subscribe( resp => {
+              for( const i in resp){
+                if(resp[i].displayName != ""){
+                  this.displayName = `<span class="font-weight-bold">${resp[i].displayName} | Mi cuenta </span><i class="fas fa-angle-down ml-2"></i>`;
+                }
+                if(resp[i].tipo == "Dirigente" || resp[i].tipo == "Afiliado" ){
+                  this.tipo = resp[i].tipo;
+                }else{
+                  this.tipo = "Invitado";
+                }
+                localStorage.setItem("tipo", resp[i].tipo);
+              }
+            });
+      }
+    });
+  }
+  /* Salir del sistema */
+  logout(){
+    localStorage.removeItem("idToken");
+    localStorage.removeItem("expiresIn");
+    localStorage.removeItem("tipo");
+    window.open('login', "_top");
   }
 
 }
