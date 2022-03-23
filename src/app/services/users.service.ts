@@ -37,6 +37,7 @@ export class UsersService {
   public tipoService:string = "";
 
 
+
   constructor(private http:HttpClient) {
 
    }
@@ -130,6 +131,11 @@ export class UsersService {
     return this.http.post(`${this.confirmPasswordReset}`, body);
   }
 
+  /* Consulta a RENIEC */
+
+  ConsultaReniecFnc(dni:string){
+    return this.http.get(`https://dniruc.apisperu.com/api/v1/dni/${dni}?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRvcGd1bmNvdW50ZXJAZ21haWwuY29tIn0.fSQegRlnAsbVesRoS5fQuUAgAmXQN_DlKMzP74XQf0M`);
+  }
 
   get role(){
     this.tipoService = localStorage.getItem('tipo');

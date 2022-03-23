@@ -16,6 +16,7 @@ declare var $:any;
 export class RegisterComponent implements OnInit {
 
   user: UsersModel;
+
   constructor(private usersService: UsersService) {
     this.user = new UsersModel();
 
@@ -40,6 +41,24 @@ export class RegisterComponent implements OnInit {
         });
       }, false);
     })();
+
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 5000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+      }
+    })
+
+    Toast.fire({
+      icon: 'warning',
+      title: 'Aviso: Asegurese que el DNI exista antes de completar el registro'
+    })
+
   }
    // Validacion de expresion regular del formulario para
    validate(input){
@@ -64,7 +83,15 @@ export class RegisterComponent implements OnInit {
               Swal.fire("Error", "El DNI ya esta registrado","error");
               input.value = "";
             }
-          });
+        });
+        this.usersService.ConsultaReniecFnc(input.value).subscribe( resp => {
+            if(resp["message"] === "No se encontraron resultadoss."){
+              $(input).parent().addClass('was-validated');
+              Swal.fire("Error", "El DNI no existe en RENIEC","error");
+              input.value = "";
+            }
+        });
+
       }
 
       if($(input).attr("name") == "nombres"){
