@@ -4,10 +4,9 @@
       <a href="../../index2.html"> <img src="../../assets/img/template/logo_light.png" alt="AdminLTE Logo" width="200px" height="200px" class="rounded mx-auto d-block"></a>
     </div>
 
-    <div class="card">
-      <div class="card-body register-card-body">
-        <p class="login-box-msg">Registrar un nuevo participante</p>
-
+    <div class="card card-outline card-primary">
+      <div class="card-body">
+        <p class="login-box-msg" style="font-size: 20px;">Registrar un nuevo participante</p>
         <form
             method="post"
             (ngSubmit) = "onSubmit(f)"
@@ -91,7 +90,7 @@
             >
             <div class="input-group-append">
               <div class="input-group-text">
-                <span class="fas fa-user"></span>
+                <span class="fas fa-address-card"></span>
               </div>
             </div>
             <div class="valid-feedback">Valido.</div>
@@ -113,7 +112,7 @@
             >
             <div class="input-group-append">
               <div class="input-group-text">
-                <span class="fas fa-user"></span>
+                <span class="fas fa-phone-square-alt"></span>
               </div>
             </div>
             <div class="valid-feedback">Valid.</div>
@@ -151,9 +150,7 @@
             </div>
           </div> -->
             <!-- /.col -->
-            <div class="col-md-12">
               <button type="submit" class="btn btn-primary btn-block">Register</button>
-            </div>
             <!-- /.col -->
         </form>
         <div class="mt-2">
