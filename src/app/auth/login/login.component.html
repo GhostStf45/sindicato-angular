@@ -4,9 +4,12 @@
       <a href="../../index2.html"> <img src="../../assets/img/template/logo_light.png" alt="AdminLTE Logo" width="200px" height="200px" class="rounded mx-auto d-block"></a>
     </div>
     <!-- /.login-logo -->
-    <div class="card">
-      <div class="card-body login-card-body">
-
+    <div class="card card-outline card-primary">
+      <!-- <div class="card-header text-center">
+        <a href="../../index2.html" class="h1"><b>SUTRASAF</b></a>
+      </div> -->
+      <div class="card-body">
+        <p class="login-box-msg" style="font-size: 20px;">Ingrese para iniciar su sesión</p>
         <form action="../../index3.html" method="post"
             (ngSubmit) = "onSubmit(f)"
             #f = "ngForm"
@@ -27,11 +30,6 @@
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-envelope"></span>
-              </div>
-            </div>
-            <div class="input-group-append">
-              <div class="input-group-text">
-                <span class="fas fa-user"></span>
               </div>
             </div>
             <div class="valid-feedback">Valido.</div>
@@ -66,15 +64,18 @@
               </div>
             </div>
           </div>
-          <div class="row">
+          <div class="row mt-2 mb-3">
             <!-- /.col -->
             <div class="col-12">
-              <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+              <button type="submit" class="btn btn-primary btn-block">Acceder</button>
             </div>
             <!-- /.col -->
           </div>
           <p class="mb-1">
             <a href="#resetPassword" data-toggle="modal">Olvidé mi contraseña</a>
+          </p>
+          <p class="mb-0">
+            <a [routerLink]="['/register']" class="text-center mt-4">Registrarme como nuevo participante</a>
           </p>
         </form>
       </div>
@@ -123,6 +124,7 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
       </div>
+
 
     </div>
   </div>
