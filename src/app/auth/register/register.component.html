@@ -17,11 +17,7 @@
         >
 
           <div class="input-group mb-3">
-            <input type="email" class="form-control" placeholder="Email" [(ngModel)]="user.email" name="email" required email
-
-            (change)="validate(email)"
-            #email
-            >
+            <input type="email" class="form-control" placeholder="Email" [(ngModel)]="user.email" name="email" required email>
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-envelope"></span>
@@ -80,7 +76,7 @@
             <input type="text" class="form-control" placeholder="DNI" [(ngModel)]="user.dni" name="dni"
               minlength="8"
               maxlength="8"
-              pattern="[1-9]{8,8}"
+              pattern="[0-9]{8,8}"
               data-toggle="tooltip"
               data-placement="top"
               title="Su DNI debe de contener 8 cifras"
@@ -107,8 +103,6 @@
             data-placement="top"
             title="Su telefono debe de contener 9 cifras"
             required
-            (change)="validate(telefono)"
-            #telefono
             >
             <div class="input-group-append">
               <div class="input-group-text">

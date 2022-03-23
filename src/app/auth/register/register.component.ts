@@ -75,7 +75,18 @@ export class RegisterComponent implements OnInit {
       //     });
       // }
 
+      // if($(input).attr("name") == "dni"){
+      //   pattern = /^[0-9]{1,8}$/;
+      //   this.usersService.ConsultaReniecFnc(input.value).subscribe( resp => {
+      //     if(resp["message"] === "No se encontraron resultadoss."){
+
+      //       Swal.fire("Error", "El DNI no existe en RENIEC","error");
+      //       input.value = "";
+      //     }
+      // });
+      // }
       if($(input).attr("name") == "dni"){
+        pattern = /^[0-9]{8,8}$/;
         this.usersService.getFilterData("dni", input.value)
           .subscribe(resp => {
             if(Object.keys(resp).length > 0){
@@ -85,12 +96,12 @@ export class RegisterComponent implements OnInit {
             }
         });
         this.usersService.ConsultaReniecFnc(input.value).subscribe( resp => {
-            if(resp["message"] === "No se encontraron resultadoss."){
-              $(input).parent().addClass('was-validated');
-              Swal.fire("Error", "El DNI no existe en RENIEC","error");
-              input.value = "";
-            }
-        });
+          if(resp["message"] === "No se encontraron resultadoss."){
+
+            Swal.fire("Error", "El DNI no existe en RENIEC","error");
+            input.value = "";
+          }
+      });
 
       }
 
@@ -111,6 +122,7 @@ export class RegisterComponent implements OnInit {
    // Envio del formulario
 
   onSubmit(f:NgForm){
+    console.log(f);
     if(f.invalid){
       return;
     }
