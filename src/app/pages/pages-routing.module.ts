@@ -23,7 +23,7 @@ const routes: Routes = [
 	  	{ path: 'disputes', loadChildren: () => import('./main-page/disputes/disputes.module').then(m=>m.DisputesModule)},
 	  	{ path: 'messages', loadChildren: () => import('./main-page/messages/messages.module').then(m=>m.MessagesModule)},
 
-	  ], canActivate: [AfiliadosGuard]
+	  ], canActivate: [AfiliadosGuard, AuthGuard]
   }
 
 ];
