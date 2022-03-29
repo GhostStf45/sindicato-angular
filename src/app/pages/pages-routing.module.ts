@@ -15,7 +15,7 @@ const routes: Routes = [
 	  	{ path: '', loadChildren: () => import('./main-page/home/home.module').then(m=>m.HomeModule)},
 	  	{ path: 'users', loadChildren: () => import('./main-page/users/users.module').then(m=>m.UsersModule)},
 	  	{ path: 'categories', loadChildren: () => import('./main-page/categories/categories.module').then(m=>m.CategoriesModule)},
-	  	{ path: 'subcategories', loadChildren: () => import('./main-page/subcategories/subcategories.module').then(m=>m.SubcategoriesModule)},
+	  	{ path: 'afiliados', loadChildren: () => import('./main-page/afiliados/afiliados.module').then(m=>m.AfiliadosModule)},
 	  	{ path: 'stores', loadChildren: () => import('./main-page/stores/stores.module').then(m=>m.StoresModule)},
 	    { path: 'products', loadChildren: () => import('./main-page/products/products.module').then(m=>m.ProductsModule)},
 	  	{ path: 'orders', loadChildren: () => import('./main-page/orders/orders.module').then(m=>m.OrdersModule)},

@@ -2,15 +2,15 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 //componentes
-import { SubcategoriesComponent } from './subcategories.component';
+import { AfiliadosComponent } from './afiliados.component';
 
 
 const routes: Routes = [
-	{ path: '', component: SubcategoriesComponent}
+	{ path: '', component: AfiliadosComponent}
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class SubcategoriesRoutingModule { }
+export class AfiliadosRoutingModule { }
