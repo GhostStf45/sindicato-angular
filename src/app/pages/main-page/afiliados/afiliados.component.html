@@ -36,7 +36,7 @@
         </div>
         <div class="card-body">
           <div class="mat-table-container">
-            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 matTable-table">
+            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 matTable-table" multiTemplateDataRows>
 
               <!-- Position Column -->
               <ng-container matColumnDef="position">
@@ -54,7 +54,7 @@
                 <td mat-cell *matCellDef="let element"> {{element.displayName}} </td>
               </ng-container>
 
-              <ng-container matColumnDef="dni">
+              <ng-container matColumnDef="dni" *ngIf="!screenSizeSM">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por dni">
                   DNI
                 </th>
@@ -66,11 +66,11 @@
                 </th>
                 <td mat-cell *matCellDef="let element"> {{element.area_laboral}} </td>
               </ng-container>
-              <ng-container matColumnDef="email">
+              <ng-container matColumnDef="email" *ngIf="!screenSizeSM">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por email">
                   Email
                 </th>
-                <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+                <td  mat-cell *matCellDef="let element"> {{element.email}} </td>
               </ng-container>
               <ng-container matColumnDef="estado">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por estado">
@@ -78,11 +78,23 @@
                 </th>
                 <td mat-cell *matCellDef="let element"> {{element.estado}} </td>
               </ng-container>
-              <ng-container matColumnDef="fecha_inscripcion">
+              <ng-container matColumnDef="telefono" *ngIf="!screenSizeSM">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por telefono">
+                  Telefono o Celular
+                </th>
+                <td  mat-cell *matCellDef="let element"> {{element.telefono}} </td>
+              </ng-container>
+              <ng-container matColumnDef="tipo">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por tipo">
+                  Tipo
+                </th>
+                <td mat-cell *matCellDef="let element"> {{element.tipo}} </td>
+              </ng-container>
+              <ng-container matColumnDef="fecha_inscripcion" *ngIf="!screenSizeSM">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por fecha de inscripción">
                   Fecha de inscripción
                 </th>
-                <td mat-cell *matCellDef="let element"> {{element.fecha_inscripcion}} </td>
+                <td  mat-cell *matCellDef="let element"> {{element.fecha_inscripcion}} </td>
               </ng-container>
               <!-- Acciones -->
               <ng-container matColumnDef="acciones">
@@ -90,11 +102,65 @@
                  Acciones
                 </th>
                 <td mat-cell *matCellDef="let element">
-                  <button class="btn btn-sm btn-warning mr-2"><i class="fa fa-eye"></i></button>
+                  <button
+                    class="btn btn-sm btn-warning mr-2"
+                    (click)="expandedElement = expandedElement === element ? null : element"
+
+                  ><i class="fa fa-eye"></i></button>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="expandedDetail">
+                <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+                  <div class="example-element-detail"
+                       [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                   <ul class="pl-0">
+                     <li class="py-2">
+                       <span class="mx-2 text-muted">.</span>
+                       <strong class="mat-header-cell">Nombre completo:</strong>
+                       {{element.displayName}}
+
+                      </li>
+                     <li class="py-2" *ngIf="screenSizeSM">
+                        <span class="mx-2 text-muted" >.</span>
+                        <strong class="mat-header-cell">DNI:</strong>
+                        {{element.dni}}
+                      </li>
+                     <li class="py-2">
+                        <span class="mx-2 text-muted">.</span>
+                        <strong class="mat-header-cell">Area Laboral:</strong>
+                        {{element.area_laboral}}
+                      </li>
+                     <li class="py-2" *ngIf="screenSizeSM">
+                      <span class="mx-2 text-muted">.</span>
+                      <strong class="mat-header-cell">Email: </strong>
+                      {{element.email}}</li>
+                     <li class="py-2">
+                      <span class="mx-2 text-muted">.</span>
+                      <strong class="mat-header-cell">Estado: </strong>
+                      {{element.estado}}</li>
+                     <li class="py-2" *ngIf="screenSizeSM">
+                      <span class="mx-2 text-muted">.</span>
+                      <strong class="mat-header-cell">Telefono: </strong>
+                      {{element.telefono}}</li>
+                     <li class="py-2">
+                      <span class="mx-2 text-muted">.</span>
+                      <strong class="mat-header-cell">Tipo: </strong>
+                      {{element.tipo}}</li>
+                     <li class="py-2" *ngIf="screenSizeSM">
+                        <span class="mx-2 text-muted">.</span>
+                        <strong class="mat-header-cell">Fecha de Inscripción:</strong>
+                       {{element.fecha_inscripcion}}</li>
+                   </ul>
+                  </div>
                 </td>
               </ng-container>
               <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+              <tr mat-row *matRowDef="let element; columns: displayedColumns;"
+                  class="example-element-row"
+                  [class.example-expanded-row]="expandedElement === element"
+                >
+              </tr>
+              <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
             </table>
           </div>
         </div>

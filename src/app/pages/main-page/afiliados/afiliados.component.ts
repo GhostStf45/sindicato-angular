@@ -1,20 +1,28 @@
 import { Component, OnInit } from '@angular/core';
 import { Iafiliados } from '../../../interfaces/Iafiliados';
 import { AfiliadosService } from '../../../services/afiliados.service';
-
 import { MatTableDataSource} from '@angular/material/table';
+import {animate, state, style, transition, trigger} from '@angular/animations';
+import { functions } from '../../../helpers/functions';
 
 @Component({
   selector: 'app-afiliados',
   templateUrl: './afiliados.component.html',
-  styleUrls: ['./afiliados.component.css']
+  styleUrls: ['./afiliados.component.css'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ])
+  ]
 })
 export class AfiliadosComponent implements OnInit {
 
 
    /* Varaible para nombrar las columnas de la tabla de Angular Material */
 
-   displayedColumns: string[] =['position', 'displayName', 'dni', 'area_laboral','email', 'estado', 'fecha_inscripcion', 'acciones']
+   displayedColumns: string[] =['position', 'displayName', 'area_laboral', 'estado', 'tipo', 'acciones']
 
   /* Varaible que instanciará la data que aparecerá en la tabla */
 
@@ -23,11 +31,26 @@ export class AfiliadosComponent implements OnInit {
   /* Arreglo de afiliados */
   afiliados: Iafiliados[] = [];
 
+  expandedElement!: Iafiliados | null;
+
+  screenSizeSM = false;
+
   constructor( private afiliadosService: AfiliadosService) { }
 
   ngOnInit(): void {
 
     this.getData();
+
+    if(functions.screenSize(0,767)){
+      this.screenSizeSM = true;
+    }else{
+      this.screenSizeSM = false;
+      this.displayedColumns.splice(3,0,'dni');
+      this.displayedColumns.splice(5,0,'email');
+      this.displayedColumns.splice(7,0,'telefono');
+      this.displayedColumns.splice(9,0,'fecha_inscripcion');
+    }
+    console.log('screenSize', this.screenSizeSM);
 
   }
 
