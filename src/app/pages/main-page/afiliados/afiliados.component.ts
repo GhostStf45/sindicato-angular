@@ -86,6 +86,10 @@ export class AfiliadosComponent implements OnInit {
 
 
 
+
+
+
+
   }
 
   // Get Uniqu values from columns to build filter
@@ -121,11 +125,12 @@ export class AfiliadosComponent implements OnInit {
 
           } as Iafiliados));
 
+
           /* Vincular la información de la interfaz */
           this.dataSource = new MatTableDataSource(this.afiliados);
 
-          //   Overrride default filter behaviour of Material Datatable
-          this.dataSource.filterPredicate = this.createFilter();
+          // // Overrride default filter behaviour of Material Datatable
+          //   this.dataSource.filterPredicate = this.createFilter();
 
           this.filterSelectObj.filter((o) => {
             o.options = this.getFilterObject(this.dataSource.data, o.columnProp);
@@ -192,8 +197,10 @@ export class AfiliadosComponent implements OnInit {
    applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+    console.log(filterValue);
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
+
     }
   }
 
