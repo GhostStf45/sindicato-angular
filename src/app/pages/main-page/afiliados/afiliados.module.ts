@@ -10,13 +10,23 @@ import { AfiliadosComponent } from './afiliados.component';
 /* Angular material */
 
 import { MatTableModule} from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [AfiliadosComponent],
   imports: [
     CommonModule,
     AfiliadosRoutingModule,
-    MatTableModule
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatSelectModule,
+    MatInputModule,
+    MatButtonModule
   ]
 })
 export class AfiliadosModule { }
