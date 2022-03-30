@@ -15,7 +15,10 @@ declare var $:any;
 export class HomeComponent implements OnInit {
 
   authValidate:boolean = false;
+
   displayName:string = "";
+
+
   tipo: string = "";
 
   constructor( private usersService: UsersService) { }
@@ -63,6 +66,11 @@ export class HomeComponent implements OnInit {
                   this.tipo = "Invitado";
                 }
                 localStorage.setItem("tipo", resp[i].tipo);
+                localStorage.setItem("displayName", resp[i].displayName);
+                localStorage.setItem("dni", resp[i].dni);
+                localStorage.setItem("fecha_inscripcion", resp[i].fecha_incripcion);
+
+
               }
             });
       }
@@ -73,6 +81,9 @@ export class HomeComponent implements OnInit {
     localStorage.removeItem("idToken");
     localStorage.removeItem("expiresIn");
     localStorage.removeItem("tipo");
+    localStorage.removeItem("displayName");
+    localStorage.removeItem("dni");
+    localStorage.removeItem("fecha_inscripcion");
     window.open('login', "_top");
   }
 
