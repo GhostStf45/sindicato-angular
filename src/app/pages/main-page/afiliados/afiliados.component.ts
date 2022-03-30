@@ -83,13 +83,6 @@ export class AfiliadosComponent implements OnInit {
       this.displayedColumns.splice(8,0,'fecha_inscripcion');
     }
 
-
-
-
-
-
-
-
   }
 
   // Get Uniqu values from columns to build filter
