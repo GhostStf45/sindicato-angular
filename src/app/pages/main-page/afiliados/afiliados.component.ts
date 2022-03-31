@@ -6,6 +6,7 @@ import { MatSort} from '@angular/material/sort';
 import { MatTableDataSource} from '@angular/material/table';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import { functions } from '../../../helpers/functions';
+import {ExporterService } from '../../../services/exporter.service';
 
 @Component({
   selector: 'app-afiliados',
@@ -51,22 +52,23 @@ export class AfiliadosComponent implements OnInit {
 
   @ViewChild(MatSort) sort: MatSort;
 
-  filterSelectObj = [];
+  // filterSelectObj = [];
 
-  constructor( private afiliadosService: AfiliadosService) {
+  constructor( private afiliadosService: AfiliadosService, private exporterService: ExporterService) {
 
     // Object to create Filter for
-    this.filterSelectObj = [
-      {
-        name: 'Estado',
-        columnProp: 'estado',
-        options: []
-      }, {
-        name: 'Area Laboral',
-        columnProp: 'area_laboral',
-        options: []
-      }
-    ]
+  //   this.filterSelectObj = [
+  //     {
+  //       name: 'Estado',
+  //       columnProp: 'estado',
+  //       options: []
+  //     }, {
+  //       name: 'Area Laboral',
+  //       columnProp: 'area_laboral',
+  //       options: []
+  //     }
+  //   ]
+  //
   }
 
   ngOnInit(): void {
@@ -86,16 +88,18 @@ export class AfiliadosComponent implements OnInit {
   }
 
   // Get Uniqu values from columns to build filter
-  getFilterObject(fullObj, key) {
-    const uniqChk = [];
-    fullObj.filter((obj) => {
-      if (!uniqChk.includes(obj[key])) {
-        uniqChk.push(obj[key]);
-      }
-      return obj;
-    });
-    return uniqChk;
-  }
+  // getFilterObject(fullObj, key) {
+  //   const uniqChk = [];
+  //   fullObj.filter((obj) => {
+  //     if (!uniqChk.includes(obj[key])) {
+  //       uniqChk.push(obj[key]);
+  //     }
+  //     return obj;
+  //   });
+  //   return uniqChk;
+  // }
+
+
 
   getData(): void {
     this.loadData = true;
@@ -122,12 +126,14 @@ export class AfiliadosComponent implements OnInit {
           /* Vincular la información de la interfaz */
           this.dataSource = new MatTableDataSource(this.afiliados);
 
+
+
           // // Overrride default filter behaviour of Material Datatable
           //   this.dataSource.filterPredicate = this.createFilter();
 
-          this.filterSelectObj.filter((o) => {
-            o.options = this.getFilterObject(this.dataSource.data, o.columnProp);
-          });
+          // this.filterSelectObj.filter((o) => {
+          //   o.options = this.getFilterObject(this.dataSource.data, o.columnProp);
+          // });
 
           this.dataSource.paginator = this.paginator;
 
@@ -137,6 +143,10 @@ export class AfiliadosComponent implements OnInit {
           this.loadData = false;
 
         });
+
+  }
+  exportXLSX(){
+      this.exporterService.exportToExcel(this.dataSource.data, 'afiliados');
   }
   // Called on Filter change
   filterChange(filter, event) {
@@ -145,47 +155,47 @@ export class AfiliadosComponent implements OnInit {
     this.dataSource.filter = JSON.stringify(this.afiliadosFiltro);
   }
   // Custom filter method fot Angular Material Datatable
-  createFilter() {
-    let filterFunction = function (data: any, filter: string): boolean {
-      let searchTerms = JSON.parse(filter);
-      let isFilterSet = false;
-      for (const col in searchTerms) {
-        if (searchTerms[col].toString() !== '') {
-          isFilterSet = true;
-        } else {
-          delete searchTerms[col];
-        }
-      }
+  // createFilter() {
+  //   let filterFunction = function (data: any, filter: string): boolean {
+  //     let searchTerms = JSON.parse(filter);
+  //     let isFilterSet = false;
+  //     for (const col in searchTerms) {
+  //       if (searchTerms[col].toString() !== '') {
+  //         isFilterSet = true;
+  //       } else {
+  //         delete searchTerms[col];
+  //       }
+  //     }
 
-      console.log(searchTerms);
+  //     console.log(searchTerms);
 
-      let nameSearch = () => {
-        let found = false;
-        if (isFilterSet) {
-          for (const col in searchTerms) {
-            searchTerms[col].trim().toLowerCase().split(' ').forEach(word => {
-              if (data[col].toString().toLowerCase().indexOf(word) != -1 && isFilterSet) {
-                found = true
-              }
-            });
-          }
-          return found
-        } else {
-          return true;
-        }
-      }
-      return nameSearch()
-    }
-    return filterFunction
-  }
-   // Reset table filters
-   resetFilters() {
-    this.afiliadosFiltro = {}
-    this.filterSelectObj.forEach((value, key) => {
-      value.modelValue = undefined;
-    })
-    this.dataSource.filter = "";
-  }
+  //     let nameSearch = () => {
+  //       let found = false;
+  //       if (isFilterSet) {
+  //         for (const col in searchTerms) {
+  //           searchTerms[col].trim().toLowerCase().split(' ').forEach(word => {
+  //             if (data[col].toString().toLowerCase().indexOf(word) != -1 && isFilterSet) {
+  //               found = true
+  //             }
+  //           });
+  //         }
+  //         return found
+  //       } else {
+  //         return true;
+  //       }
+  //     }
+  //     return nameSearch()
+  //   }
+  //   return filterFunction
+  // }
+  //  // Reset table filters
+  //  resetFilters() {
+  //   this.afiliadosFiltro = {}
+  //   this.filterSelectObj.forEach((value, key) => {
+  //     value.modelValue = undefined;
+  //   })
+  //   this.dataSource.filter = "";
+  // }
    /* Filtro de busqueda */
    applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -195,6 +205,10 @@ export class AfiliadosComponent implements OnInit {
       this.dataSource.paginator.firstPage();
 
     }
+  }
+
+  exportAsXLSX():void{
+
   }
 
 

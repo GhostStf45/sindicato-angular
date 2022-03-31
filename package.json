@@ -24,12 +24,14 @@
     "@angular/router": "~11.1.1",
     "angular-confirmation-popover": "^6.0.0",
     "angular-datatables": "^13.0.1",
+    "file-saver": "^2.0.5",
     "firebase": "^7.24.0",
     "notie": "^4.3.1",
     "reniec-sunat-js": "^1.0.0",
     "rxjs": "~6.6.0",
     "sweetalert2": "^11.4.5",
     "tslib": "^2.0.0",
+    "xlsx": "^0.18.5",
     "zone.js": "~0.11.3"
   },
   "devDependencies": {

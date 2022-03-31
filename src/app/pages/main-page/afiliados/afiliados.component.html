@@ -23,19 +23,21 @@
       <!-- Default box -->
       <div class="card">
         <div class="card-header">
-          <div class="col-12 col-sm-12 col-xl-5 mr-auto">
-            <!-- <mat-form-field *ngFor="let filter of filterSelectObj" style="margin-left: 15px;">
-              <mat-label>Filtrar por {{filter.name}}</mat-label>
-              <select matNativeControl name="{{filter.columnProp}}" [(ngModel)]="filter.modelValue"
-                (change)="filterChange(filter,$event)" class="form-control">
-                <option value="">-- Seleccionar {{filter.name}} --</option>
-                <option [value]="item" *ngFor="let item of filter.options">{{item}}</option>
-              </select>
-            </mat-form-field>
-            &nbsp;
-            <button  mat-flat-button color="warn" (click)="resetFilters()">Resetear filtros</button> -->
-          </div>
+
           <div [hidden]="loadData" class="row mb-2">
+            <div class="col-6 col-sm-6 col-xl-5 mr-auto">
+              <button mat-raised-button color="primary" (click)="exportXLSX()" class="mt-2"><mat-icon>trending_down</mat-icon>Exportar a Excel</button>
+              <!-- <mat-form-field *ngFor="let filter of filterSelectObj" style="margin-left: 15px;">
+                <mat-label>Filtrar por {{filter.name}}</mat-label>
+                <select matNativeControl name="{{filter.columnProp}}" [(ngModel)]="filter.modelValue"
+                  (change)="filterChange(filter,$event)" class="form-control">
+                  <option value="">-- Seleccionar {{filter.name}} --</option>
+                  <option [value]="item" *ngFor="let item of filter.options">{{item}}</option>
+                </select>
+              </mat-form-field>
+              &nbsp;
+              <button  mat-flat-button color="warn" (click)="resetFilters()">Resetear filtros</button> -->
+            </div>
             <div class="col-12 col-sm-12 col-xl-3 ml-auto mt-2">
               <input class="form-control" placeholder="Buscar...." (keyup)="applyFilter($event)">
             </div>
