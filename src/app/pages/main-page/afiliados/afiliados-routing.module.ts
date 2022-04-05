@@ -3,10 +3,12 @@ import { RouterModule, Routes } from '@angular/router';
 
 //componentes
 import { AfiliadosComponent } from './afiliados.component';
-
+import { EditAfiliadoComponent } from './edit-afiliado/edit-afiliado.component';
 
 const routes: Routes = [
-	{ path: '', component: AfiliadosComponent}
+	{ path: '', component: AfiliadosComponent},
+	{ path: 'edit-afiliado/:id', component: EditAfiliadoComponent},
+
 ];
 
 @NgModule({

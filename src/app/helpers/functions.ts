@@ -9,4 +9,20 @@ export class functions {
       return false;
     }
   }
+  /*=============================================
+	Función para validar campos del formulario
+	=============================================*/
+
+	static invalidField(field:string, f:FormGroup, formSubmitted:boolean):boolean{
+
+		if(formSubmitted && f.controls[field].invalid){
+
+		   	return true;
+
+		}else{
+
+			return false;
+		}
+
+	}
 }

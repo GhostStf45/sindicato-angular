@@ -126,6 +126,32 @@
                     (click)="expandedElement = expandedElement === element ? null : element"
 
                   ><i class="fa fa-eye"></i></button>
+                  <button
+                  class="btn btn-sm btn-info mr-2"
+                  [routerLink]="['edit-afiliado/', element.id]"
+                  *ngIf="element.estado == 'Activo' || element.estado ==  'Inhabilitado'"
+
+                ><i class="fas fa-pencil-alt"></i></button>
+                <button
+                    *ngIf="element.estado == 'En espera'"
+                    class="btn btn-sm btn-secondary mr-2"
+                    (click)="approveParticipante(element.id)"
+
+                  ><i class="fa fa-clock"></i></button>
+                  <button
+                  *ngIf="element.estado == 'Activo'"
+                  class="btn btn-sm btn-success mr-2"
+                  (click)="approveParticipante(element.id)"
+
+
+                ><i class="fa fa-check"></i></button>
+                <button
+                *ngIf="element.estado == 'Inhabilitado'"
+                class="btn btn-sm btn-danger mr-2"
+                (click)="approveParticipante(element.id)"
+
+
+              ><i class="fas fa-ban"></i></button>
                 </td>
               </ng-container>
               <ng-container matColumnDef="expandedDetail">

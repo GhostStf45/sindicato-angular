@@ -8,6 +8,15 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 import { functions } from '../../../helpers/functions';
 import {ExporterService } from '../../../services/exporter.service';
 
+import { ApproveAfiliadoComponent } from './approve-afiliado/approve-afiliado.component';
+
+/*
+  TODO : TERMINAR LA APROBACIÓN DE LOS AFILIADOS Y/O PARTICIPANTES VIDEO UDEMY 137
+
+
+
+*/
+
 @Component({
   selector: 'app-afiliados',
   templateUrl: './afiliados.component.html',

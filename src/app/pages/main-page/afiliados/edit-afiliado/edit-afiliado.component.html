@@ -1,0 +1,164 @@
+<div class="content-wrapper">
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Editar afiliado</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumbs float-sm-right">
+                <li class="breadcrumb-item"><a [routerLink]="['/']">Home</a></li>
+                <li class="breadcrumb-item"><a [routerLink]="['/afiliados']">Afiliados</a></li>
+            </ol>
+          </div>
+      </div>
+    </div>
+  </section>
+  <div class="card card-warning">
+    <form
+      autocomplete="off"
+      [formGroup]="f"
+      (ngSubmit)="saveAfiliado()"
+
+    >
+    <div class="card-body">
+        <ng-container *ngIf="!loadData">
+            <div class="form-group">
+              <label for="inputName">Nombres</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Nombres"
+                formControlName="nombres"
+                maxlength="50"
+                [ngClass]="{'is-invalid':invalidField('nombres') || nombres.invalid && nombres.errors?.pattern}"
+
+              >
+              <span class="invalid-feedback" *ngIf="nombres.invalid && nombres.errors?.required">
+                  Por favor, ingrese correctamente los datos del campo nombre
+              </span>
+              <span class="invalid-feedback" *ngIf="nombres.invalid && nombres.errors?.pattern">
+                Solo se aceptan datos alfabeticos
+              </span>
+              <span class="invalid-feedback" *ngIf="nombres.invalid && nombres.errors?.maxlength">
+                El nombre no puede tener mas de 50 caracteres.
+              </span>
+            </div>
+            <div class="form-group">
+              <label for="inputName">Apellidos</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="apellidos"
+                formControlName="apellidos"
+                maxlength="50"
+                [ngClass]="{'is-invalid':invalidField('apellidos') || apellidos.invalid && apellidos.errors?.pattern}"
+
+              >
+              <span class="invalid-feedback" *ngIf="apellidos.invalid && apellidos.errors?.required">
+                  Por favor, ingrese correctamente los datos del campo apellido
+              </span>
+              <span class="invalid-feedback" *ngIf="apellidos.invalid && apellidos.errors?.pattern">
+                Solo se aceptan datos alfabeticos
+              </span>
+              <span class="invalid-feedback" *ngIf="apellidos.invalid && apellidos.errors?.maxlength">
+                El apellido no puede tener mas de 50 caracteres.
+              </span>
+            </div>
+            <div class="form-group">
+              <label for="inputName">Telefono</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Telefono"
+                formControlName="telefono"
+                maxlength="9"
+                [ngClass]="{'is-invalid':invalidField('telefono') || telefono.invalid && telefono.errors?.pattern}"
+
+              >
+              <span class="invalid-feedback" *ngIf="telefono.invalid && telefono.errors?.required">
+                  Por favor, ingrese correctamente los datos del campo telefono
+              </span>
+              <span class="invalid-feedback" *ngIf="telefono.invalid && telefono.errors?.pattern">
+                Solo se aceptan datos numericos
+              </span>
+              <span class="invalid-feedback" *ngIf="telefono.invalid && telefono.errors?.maxlength">
+                El telefono no puede tener mas de 9 caracteres.
+              </span>
+            </div>
+            <div class="form-group">
+              <label for="inputName">Area laboral</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Area laboral"
+                formControlName="area_laboral"
+                maxlength="50"
+                [ngClass]="{'is-invalid':invalidField('area_laboral') || area_laboral.invalid && area_laboral.errors?.pattern}"
+
+              >
+              <span class="invalid-feedback" *ngIf="area_laboral.invalid && area_laboral.errors?.required">
+                  Por favor, ingrese correctamente los datos del campo Area laboral
+              </span>
+              <span class="invalid-feedback" *ngIf="area_laboral.invalid && area_laboral.errors?.pattern">
+                Solo se aceptan datos alfabeticos
+              </span>
+              <span class="invalid-feedback" *ngIf="area_laboral.invalid && area_laboral.errors?.maxlength">
+                El Area laboral no puede tener mas de 50 caracteres.
+              </span>
+            </div>
+            <div class="form-group">
+              <label for="inputName">Estado</label>
+              <select
+              class="form-control"
+              formControlName="estado"
+              [ngClass]="{'is-invalid': invalidField('estado')}"
+            >
+                  <option value="{{ estado.value }}">{{ estado.value }}</option>
+                  <option *ngIf="estado.value == 'Activo'" value="Inhabilitado">Inhabilitado</option>
+                  <option *ngIf="estado.value == 'Inhabilitado'" value="Activo">Activo</option>
+
+              </select>
+
+              <span class="invalid-feedback" *ngIf="estado.invalid && estado.errors?.required">
+                Por favor, seleccione un estado
+            </span>
+
+
+            </div>
+            <div class="form-group">
+              <label for="inputName">Tipo</label>
+              <select
+              class="form-control"
+              formControlName="tipo"
+              [ngClass]="{'is-invalid': invalidField('tipo')}"
+            >
+                  <option value="{{ tipo.value }}">{{ tipo.value }}</option>
+                  <option *ngIf="tipo.value == 'Invitado'" value="Afiliado">Afiliado</option>
+                  <option *ngIf="tipo.value == 'Invitado'" value="Dirigente">Dirigente</option>
+                  <option *ngIf="tipo.value == 'Afiliado'" value="Dirigente">Dirigente</option>
+                  <option *ngIf="tipo.value == 'Dirigente'" value="Afiliado">Afiliado</option>
+
+              </select>
+
+              <span class="invalid-feedback" *ngIf="tipo.invalid && tipo.errors?.required">
+                Por favor, seleccione un tipo
+            </span>
+
+
+            </div>
+        </ng-container>
+        <div *ngIf="loadData" class="overlay">
+            <i class="fa fa-2x fa-sync-alt fa-spin"></i>
+        </div>
+
+    </div>
+    <div class="card-footer">
+      <button type="button" class="btn btn-secondary" [routerLink]="['/panel/afiliados']">Atrás</button>
+      <button [disabled]="f.pending" type="submit" class="btn btn-warning float-right">Guardar</button>
+    </div>
+
+
+    </form>
+  </div>
+</div>

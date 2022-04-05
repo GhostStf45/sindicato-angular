@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 
 //ruta
 import { AfiliadosRoutingModule } from './afiliados-routing.module';
@@ -16,9 +17,11 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { EditAfiliadoComponent } from './edit-afiliado/edit-afiliado.component';
+import { ApproveAfiliadoComponent } from './approve-afiliado/approve-afiliado.component';
 
 @NgModule({
-  declarations: [AfiliadosComponent],
+  declarations: [AfiliadosComponent, EditAfiliadoComponent, ApproveAfiliadoComponent],
   imports: [
     CommonModule,
     AfiliadosRoutingModule,
@@ -28,7 +31,9 @@ import { MatIconModule } from '@angular/material/icon';
     MatSelectModule,
     MatInputModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class AfiliadosModule { }

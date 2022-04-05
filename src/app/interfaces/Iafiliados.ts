@@ -3,10 +3,10 @@ export interface Iafiliados{
     nombres: string;
     displayName: string;
     area_laboral: string;
-    dni: string;
-    email: string;
+    dni?: string;
+    email?: string;
     estado: string;
-    fecha_inscripcion: string;
+    fecha_inscripcion?: string;
     telefono: string;
     tipo: string;
 
