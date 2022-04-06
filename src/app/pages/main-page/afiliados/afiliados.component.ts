@@ -3,6 +3,7 @@ import { Iafiliados } from '../../../interfaces/Iafiliados';
 import { AfiliadosService } from '../../../services/afiliados.service';
 import { MatPaginator} from '@angular/material/paginator';
 import { MatSort} from '@angular/material/sort';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatTableDataSource} from '@angular/material/table';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import { functions } from '../../../helpers/functions';
@@ -63,7 +64,7 @@ export class AfiliadosComponent implements OnInit {
 
   // filterSelectObj = [];
 
-  constructor( private afiliadosService: AfiliadosService, private exporterService: ExporterService) {
+  constructor( private afiliadosService: AfiliadosService, private exporterService: ExporterService,  public dialog: MatDialog) {
 
     // Object to create Filter for
   //   this.filterSelectObj = [
@@ -218,6 +219,19 @@ export class AfiliadosComponent implements OnInit {
 
   exportAsXLSX():void{
 
+  }
+  approveParticipante(id: string){
+    const dialogRef = this.dialog.open(ApproveAfiliadoComponent,{
+      data: {
+        id:id
+      }
+    })
+
+    dialogRef.afterClosed().subscribe( result => {
+      if(result){
+        this.getData();
+      }
+    })
   }
 
 
