@@ -171,7 +171,7 @@ export class LoginComponent implements OnInit {
 
                           /* Redireccionar a la pagina home */
 
-                          window.open("home", "_top");
+                          window.open("account", "_top");
                         }
                     });
                   }, (err)=> {

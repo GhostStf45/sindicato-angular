@@ -5,9 +5,9 @@ export interface Iafiliados{
     area_laboral: string;
     dni?: string;
     email?: string;
-    estado: string;
+    estado?: string;
     fecha_inscripcion?: string;
     telefono: string;
-    tipo: string;
+    tipo?: string;
 
 }

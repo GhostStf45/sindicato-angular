@@ -1,0 +1,233 @@
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1>Profile</h1>
+        </div>
+      </div>
+    </div><!-- /.container-fluid -->
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-3">
+          <!-- Profile Image -->
+          <div class="card card-primary card-outline">
+            <div class="card-body box-profile">
+              <div class="text-center">
+                <span class="mr-2"><i class="img-circle fas fa-id-card-alt fa-5x"></i></span>
+              </div>
+
+              <h3 class="profile-username text-center">{{displayName}}</h3>
+
+              <p class="text-muted text-center">{{tipo}}</p>
+
+              <ul class="list-group list-group-unbordered mb-3">
+                <li class="list-group-item">
+                  <b>Documentos totales:</b> <a class="float-right">1,322</a>
+                </li>
+              </ul>
+
+
+              <a *ngIf="tipo == 'Afiliado' || tipo == 'Dirigente'" [routerLink]="['/panel']"  class="btn btn-block btn-info">Panel de control</a>
+
+              <a href="#resetPassword" data-toggle="modal" class="btn btn-block btn-warning">Cambiar contraseña</a>
+
+              <a role="button" (click)="logout()" class="btn btn-block btn-danger">Cerrar Sesión</a>
+
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">Información</h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+              <strong><i class="fas fa-book mr-1"></i> Estado </strong>
+
+              <p class="text-success">
+                {{ estado }}
+              </p>
+
+              <hr>
+
+              <strong><i class="fas fa-map-marker-alt mr-1"></i> Email </strong>
+
+              <p class="text-muted">{{ email_ }}</p>
+
+            </div>
+            <!-- /.card-body -->
+          </div>
+        </div>
+        <!-- /.col -->
+        <div class="col-md-9">
+          <div class="card">
+            <div class="card-header p-2">
+              <ul class="nav nav-pills">
+                <li class="nav-item"><a class="nav-link active" href="#settings" data-toggle="tab">Configuración</a></li>
+              </ul>
+            </div><!-- /.card-header -->
+            <div class="card-body">
+              <div class="tab-content">
+                <div class="active tab-pane" id="activity">
+                <div class="tab-pane" id="settings">
+                  <form class="form-horizontal"
+                  autocomplete="off"
+                  [formGroup]="f"
+                  (ngSubmit)="updateAfiliado()"
+
+                  >
+                    <div class="form-group row">
+                      <label for="inputName" class="col-sm-2 col-form-label">Nombres</label>
+                      <div class="col-sm-10">
+                        <input type="text" class="form-control" id="inputName" placeholder="Nombres" formControlName="nombres" value="{{nombres}}">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="inputName" class="col-sm-2 col-form-label">Apellidos</label>
+                      <div class="col-sm-10">
+                        <input type="text" class="form-control" id="inputName" placeholder="Apellidos" formControlName="apellidos" value="{{apellidos}}">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="inputName" class="col-sm-2 col-form-label">Telefono</label>
+                      <div class="col-sm-10">
+                        <input type="text" class="form-control" id="inputName" placeholder="Telefono" formControlName="telefono" value="{{telefono}}">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="inputName" class="col-sm-2 col-form-label">Area Laboral</label>
+                      <div class="col-sm-10">
+                        <input type="text" class="form-control" id="inputName"  placeholder="Area Laboral" formControlName="area_laboral_" value="{{area_laboral_}}">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="inputName" class="col-sm-2 col-form-label">DNI</label>
+                      <div class="col-sm-10">
+                        <input type="text" class="form-control" id="inputName" placeholder="DNI" formControlName="dni" value="{{dni_}}">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <div class="offset-sm-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary">Actualizar</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <!-- /.tab-pane -->
+              </div>
+            </div>
+              <!-- /.tab-content -->
+            </div><!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </div><!-- /.container-fluid -->
+  </section>
+  <!-- /.content -->
+<!-- The Modal -->
+<div class="modal" id="resetPassword">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Recuperar Contraseña</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <form action="" class="needs-validation" novalidate>
+            <div class="form-group">
+              <input type="email"
+                class="form-control" id="" aria-describedby="helpId" placeholder="Ingrese su correo electronico" name="email" #email email required>
+
+                <div class="valid-feedback">Valido.</div>
+                <div class="invalid-feedback">Por favor, rellene el campo correctamente</div>
+            </div>
+            <div class="form-group submit">
+                <button
+                type="button"class="btn btn-primary btn-lg btn-block"
+                (click)="resetPassword(email.value)"
+
+                >Enviar</button>
+            </div>
+        </form>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+      </div>
+
+
+    </div>
+  </div>
+</div>
+
+
+<!-- Ventana modal para escribir nueva contraseña -->
+
+
+<!-- The Modal -->
+<div class="modal" id="newPassword">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Recuperar Contraseña</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <form action="" class="needs-validation" novalidate>
+            <div class="form-group">
+              <input
+              type="password"
+                class="form-control"
+                name="password"
+                id=""
+                placeholder="Ingrese la nueva contraseña" name="password"
+                #password
+                (change)="validate(password)"
+                minlength="4"
+                pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,}"
+                data-toggle="tooltip"
+                title="Ingrese su contraseña con al menos 4 caracteres y debe incluir mayusculas, minusculas y numeros"
+                required
+
+                >
+
+                <div class="valid-feedback">Valido.</div>
+                <div class="invalid-feedback">Por favor, rellene el campo correctamente</div>
+            </div>
+            <div class="form-group submit">
+                <button
+                type="button"class="btn btn-primary btn-lg btn-block"
+                (click)="newPassword(password.value)"
+
+                >Enviar</button>
+            </div>
+        </form>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+      </div>
+
+    </div>
+  </div>
+</div>

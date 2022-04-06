@@ -20,7 +20,7 @@
               <ul>
                 <li *ngIf="tipo == 'Afiliado'"><a [routerLink]="['/panel']">Panel Administrativo</a></li>
                 <li *ngIf="tipo == 'Dirigente'"><a [routerLink]="['/panel']">Panel Administrativo</a></li>
-                <li><a href="#">Configuración</a></li>
+                <li><a [routerLink]="['/account']">Configuración</a></li>
                 <li><a role="button" (click)="logout()">Cerrar Sesión</a></li>
 
               </ul>
