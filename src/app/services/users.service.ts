@@ -12,8 +12,6 @@ import {
   ConfirmPasswordReset
 } from '../config';
 import { UsersModel } from '../models/users.model';
-import { HomeComponent } from '../guest-pages/home/home.component';
-
 
 
 

@@ -6,11 +6,11 @@ import { HttpClientModule } from '@angular/common/http';
 
 //Modulos Personalizados
 import { PagesModule } from './pages/pages.module';
+import { GuestPagesModule } from './guest-pages/guest-pages.module';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './auth/login/login.component';
-import { HomeComponent } from './guest-pages/home/home.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -18,13 +18,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   declarations: [
     AppComponent,
     LoginComponent,
-    HomeComponent,
-    RegisterComponent
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     PagesModule,
+    GuestPagesModule,
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,

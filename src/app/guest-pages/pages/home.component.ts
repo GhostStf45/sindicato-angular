@@ -49,9 +49,8 @@ export class HomeComponent implements OnInit {
       }
     });
 
-
-    /* validar si existe el usuario autenticado */
-    this.usersService.authActivate().then( resp => {
+     /* validar si existe el usuario autenticado */
+     this.usersService.authActivate().then( resp => {
       if(resp){
         this.authValidate =true;
         this.usersService.getFilterData("idToken", localStorage.getItem("idToken"))
@@ -75,6 +74,7 @@ export class HomeComponent implements OnInit {
             });
       }
     });
+
   }
   /* Salir del sistema */
   logout(){

@@ -1,43 +1,4 @@
-
-  <!-- ======= Header ======= -->
-  <header id="header" class="d-flex align-items-center">
-    <div class="container d-flex align-items-center">
-
-      <div class="logo me-auto">
-        <h1><a href="index.html">SUTRASAF</a></h1>
-        <!-- Uncomment below if you prefer to use an image logo -->
-        <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
-      </div>
-
-      <div class="ml-auto" *ngIf="!authValidate">
-        <a class="btn btn-danger text-white mr-2" [routerLink]="[ '/login']">Ingresar</a>
-        <a class="btn btn-info text-white" [routerLink]="[ '/register']">Participar</a>
-      </div>
-      <!-- ======= Ir a la cuenta ======= -->
-      <div class="ml-auto" *ngIf="authValidate">
-        <nav id="navbar" class="navbar">
-          <ul>
-            <li class="dropdown"><a href="#" [innerHTML]="displayName"></a>
-              <ul>
-                <li *ngIf="tipo == 'Afiliado'"><a [routerLink]="['/panel']">Panel Administrativo</a></li>
-                <li *ngIf="tipo == 'Dirigente'"><a [routerLink]="['/panel']">Panel Administrativo</a></li>
-                <li><a href="#">Configuración</a></li>
-                <li><a role="button" (click)="logout()">Cerrar Sesión</a></li>
-
-              </ul>
-            </li>
-            <div class="mt-2 ml-2">
-              <h5 *ngIf="tipo != ''"><span class="badge bg-danger text-capitalize">{{ tipo }}</span></h5>
-            </div>
-          </ul>
-
-        </nav>
-      </div>
-
-    </div>
-  </header><!-- End Header -->
- <!-- ======= Hero Section ======= -->
- <section id="hero">
+<section id="hero">
   <div class="hero-container">
     <div id="heroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="5000">
 
@@ -88,8 +49,9 @@
       </a>
 
     </div>
+
   </div>
-</section><!-- End Hero -->
+</section>
 <main id="main">
 
   <!-- ======= About Us Section ======= -->
@@ -127,41 +89,3 @@
     </div>
   </section><!-- End About Us Section -->
 </main>
-  <!-- ======= Footer ======= -->
-  <footer id="footer">
-    <div class="footer-top">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-12 col-md-12 footer-info mx-auto">
-            <h3>SUTRASAF</h3>
-            <p>
-              A108 Adam Street <br>
-              NY 535022, USA<br><br>
-              <strong>Phone:</strong> +1 5589 55488 55<br>
-              <strong>Email:</strong> info@example.com<br>
-            </p>
-            <div class="social-links mt-3">
-              <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
-              <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
-              <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
-              <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
-              <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="container">
-      <div class="copyright">
-        &copy; Copyright <strong><span>Mamba</span></strong>. All Rights Reserved
-      </div>
-      <div class="credits">
-        <!-- All the links in the footer should remain intact. -->
-        <!-- You can delete the links only if you purchased the pro version. -->
-        <!-- Licensing information: https://bootstrapmade.com/license/ -->
-        <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/mamba-one-page-bootstrap-template-free/ -->
-        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-      </div>
-    </div>
-  </footer><!-- End Footer -->

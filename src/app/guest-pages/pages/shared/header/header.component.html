@@ -1,0 +1,37 @@
+  <!-- ======= Header ======= -->
+  <header id="header" class="d-flex align-items-center">
+    <div class="container d-flex align-items-center">
+
+      <div class="logo me-auto">
+        <h1><a href="index.html">SUTRASAF</a></h1>
+        <!-- Uncomment below if you prefer to use an image logo -->
+        <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+      </div>
+
+      <div class="ml-auto" *ngIf="!authValidate">
+        <a class="btn btn-danger text-white mr-2" [routerLink]="[ '/login']">Ingresar</a>
+        <a class="btn btn-info text-white" [routerLink]="[ '/register']">Participar</a>
+      </div>
+      <!-- ======= Ir a la cuenta ======= -->
+      <div class="ml-auto" *ngIf="authValidate">
+        <nav id="navbar" class="navbar">
+          <ul>
+            <li class="dropdown"><a href="#" [innerHTML]="displayName"></a>
+              <ul>
+                <li *ngIf="tipo == 'Afiliado'"><a [routerLink]="['/panel']">Panel Administrativo</a></li>
+                <li *ngIf="tipo == 'Dirigente'"><a [routerLink]="['/panel']">Panel Administrativo</a></li>
+                <li><a href="#">Configuración</a></li>
+                <li><a role="button" (click)="logout()">Cerrar Sesión</a></li>
+
+              </ul>
+            </li>
+            <div class="mt-2 ml-2">
+              <h5 *ngIf="tipo != ''"><span class="badge bg-danger text-capitalize">{{ tipo }}</span></h5>
+            </div>
+          </ul>
+
+        </nav>
+      </div>
+
+    </div>
+  </header><!-- End Header -->

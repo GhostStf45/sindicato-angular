@@ -7,6 +7,8 @@ import { AppRoutingModule } from '../app-routing.module';
 //Modulos Personalizados
 import { SharedModule } from '../shared/shared.module';
 
+
+
 @NgModule({
   declarations: [MainPageComponent],
   imports: [
