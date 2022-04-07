@@ -1,0 +1,40 @@
+<mat-dialog-content>
+  <div class="card card-warning">
+    <div class="card-header">
+
+      <h4>Nuevo tipo de documento</h4>
+
+    </div>
+    <form
+      autocomplete="off"
+      [formGroup]="f"
+      (ngSubmit)="saveCategory()"
+
+
+    >
+      <div class="card-body">
+          <div class="form-group">
+            <label for="nombreTipo">Nombre</label>
+            <input type="text" id="*nombreTipo" class="form-control" placeholder="Nombre del tipo de documento" formControlName="nombreTipo" [ngClass]="{'is-invalid': invalidField('nombreTipo')}">
+            <span class="invalid-feedback" *ngIf="nombreTipo.invalid && nombreTipo.errors?.required">Por favor, ingrese el nombre del tipo de documento</span>
+            <span class="invalid-feedback" *ngIf="nombreTipo.invalid && nombreTipo.errors?.pattern">
+              Solo se aceptan datos alfabeticos
+            </span>
+            <span class="invalid-feedback" *ngIf="nombreTipo.invalid && nombreTipo.errors?.category">
+              Ya existe el tipo de documento.
+            </span>
+          </div>
+          <div class="form-group">
+            <label for="descripcion">Descripción</label>
+            <textarea class="form-control" id="descripcion" formControlName="descripcionTipo" rows="3" [ngClass]="{'is-invalid': invalidField('descripcionTipo')}"></textarea>
+            <span class="invalid-feedback" *ngIf="descripcionTipo.invalid && descripcionTipo.errors?.required">Por favor, ingrese la descripcion del tipo de documento</span>
+          </div>
+      </div>
+      <div class="card-footer">
+          <button type="submit" class="btn btn-warning">Guardar</button>
+          <button mat-dialog-close class="btn btn-secondary float-right">Cerrar</button>
+      </div>
+
+    </form>
+  </div>
+</mat-dialog-content>
