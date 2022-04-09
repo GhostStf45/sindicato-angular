@@ -17,6 +17,12 @@ declare var jQuery:any;
 declare var $:any;
 
 
+/*
+  TODO: VALIDAR FRONTEND => BOTON DE GUARDADO (DIV DINAMICO) Y SECCION DE SUBIR DOCUMENTOS (DIV DINAMICO)
+
+
+*/
+
 
 export interface Departamentos{
   nombres: string;
