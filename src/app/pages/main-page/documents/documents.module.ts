@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+
 //ruta
 import { DocumentsRoutingModule } from './documents-routing.module';
 
@@ -55,7 +57,8 @@ import { ListCategoryDocumentComponent } from './list-category-document/list-cat
     MatDatepickerModule,
     MatNativeDateModule,
     MatToolbarModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    NgMultiSelectDropDownModule
   ]
 })
 export class DocumentsModule { }

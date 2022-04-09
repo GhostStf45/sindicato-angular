@@ -65,6 +65,7 @@
                   [ngClass]="{'is-invalid': invalidField('nombreDocumento') || nombreDocumento.invalid && nombreDocumento.errors?.pattern}"
             >
             <span class="invalid-feedback" *ngIf="nombreDocumento.invalid && nombreDocumento.errors?.required"> Por favor, ingrese el nombre del documento</span>
+            <span class="invalid-feedback" *ngIf="nombreDocumento.invalid && nombreDocumento.errors?.document"> Ya existe el documento</span>
           </div>
         </ng-container>
         <ng-container>
@@ -94,23 +95,20 @@
                   id="InputActividad"
                   placeholder="La actividad de la empresa"
                   formControlName="actividad"
-                  [ngClass]="{'is-invalid': invalidField('actividad') || actividad.invalid && actividad.errors?.pattern}"
+                  [ngClass]="{'is-invalid': invalidField('actividad') || actividad.invalid && actividad.errors?.pattern }"
             >
             <span class="invalid-feedback" *ngIf="actividad.invalid && actividad.errors?.required"> Por favor, ingrese la actividad de la empresa</span>
           </div>
         </ng-container>
         <ng-container>
-          <div class="form-group">
-            <label for="InputTrabajadores">Trabajadores</label>
-            <input
-                  type="text" class="form-control"
-                  id="InputTrabajadores"
-                  placeholder="Seleccione los trabajadores afectados"
-                  formControlName="numeroTrabajadoresAfectados"
-                  [ngClass]="{'is-invalid': invalidField('numeroTrabajadoresAfectados') || numeroTrabajadoresAfectados.invalid && numeroTrabajadoresAfectados.errors?.pattern}"
-            >
-            <span class="invalid-feedback" *ngIf="numeroTrabajadoresAfectados.invalid && numeroTrabajadoresAfectados.errors?.required"> Por favor, ingrese los trabajadores afectados</span>
-          </div>
+          <label for="">Trabajadores afectados</label>
+          <ng-multiselect-dropdown formControlName="numeroTrabajadoresAfectados"
+          [placeholder]="'Trabajadores'"
+          [settings]="dropdownSettings"
+          [data]="dropdownList"
+          (onSelect)="onItemSelect($event)"
+          >
+          </ng-multiselect-dropdown>
         </ng-container>
         <ng-container>
           <div>

@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormBuilder, Validators, AbstractControl,FormControl } from '@angular/forms';
+import { FormBuilder, Validators, AbstractControl,FormControl, FormGroup } from '@angular/forms';
 import { ReplaySubject, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { MatDialogRef } from '@angular/material/dialog';
@@ -34,6 +34,8 @@ export class CreateDocumentComponent implements OnInit{
 
   public ubigeo = require('../../../../../../node_modules/ubigeo-peru/src/ubigeo-reniec.json');
 
+
+
   /*
     BLOQUE DE VARIABLES PARA SELECCIONAR LUGAR
 
@@ -52,6 +54,20 @@ export class CreateDocumentComponent implements OnInit{
 
     */
 
+     /*
+      Multiselect form
+
+     */
+      dropdownList = [];
+      dropdownSettings = {};
+      forms1: FormGroup;
+
+    /*
+    ====================================================
+
+
+    */
+
   public f = this.form.group({
     /* Denunciante */
     //nombreTipo: ['', [Validators.required, Validators.pattern('[a-zA-ZáéíóúÁÉÍÓÚÑ]*')]],
@@ -59,7 +75,7 @@ export class CreateDocumentComponent implements OnInit{
     nombreDirigente: ['', [Validators.required]],
     nombreDocumento: ['', {
         validators: [Validators.required],
-        asyncValidators:[ this.isRepeatDocument()],
+        asyncValidators:[],
         updateOn:'blur'
     }],
     fechaDenuncia: ['', [Validators.required]],
@@ -155,20 +171,35 @@ export class CreateDocumentComponent implements OnInit{
          .subscribe(
            (resp : any) => {
              let id = Object.keys(resp);
+
+             var result = [];
+             var counter = 0;
+
+
              id.map(a => {
+                result.push({
+                  id: a,
+                  displayName: resp[a].displayName
+                });
                 if(resp[a].displayName != '' && resp[a].tipo == 'Dirigente'){
                   this.dirigentes.push({
                     nombres: resp[a].displayName
                   });
                 }
-             })
-             console.log(this.dirigentes);
 
-            //  this.dirigentes = Object.keys(resp).map( a => {
-            //    if(resp[a].tipo == 'Dirigente'){
-            //      nombres: resp[a].displayName
-            //    }
-            //  })
+             })
+             result.filter((arr, index, self) => index === self.findIndex((t) => (t.displayName === arr.displayName && t.id === arr.id)));
+
+             this.dropdownList = result;
+              this.dropdownSettings = {
+                singleSelection: false,
+                idField: 'id',
+                textField: 'displayName',
+                maxHeight: 200,
+                selectAllText: 'Seleccionar todos',
+                unSelectAllText: 'Deseleccionar todos',
+                allowSearchFilter: true
+               }
            }
          )
 
@@ -178,8 +209,6 @@ export class CreateDocumentComponent implements OnInit{
     this.loadData = true;
 
     this.formSubmitted = true;
-
-    console.log(this.f);
 
     if(this.f.invalid){
       return;
@@ -195,6 +224,7 @@ export class CreateDocumentComponent implements OnInit{
       lugarEmpresa:this.f.controls.lugarEmpresa.value,
       detalles:this.f.controls.detalles.value
     }
+
     /* Guardar en la base de datos de documentos */
     this.documentsService.postData(dataDocuments).subscribe(
       resp => {
@@ -217,9 +247,9 @@ export class CreateDocumentComponent implements OnInit{
               resp => {
 
                 if(Object.keys(resp).length > 0){
-                  resolve({category: true });
+                  resolve({document: true });
                 }else{
-                  resolve({category: false });
+                  resolve({document: false });
                 }
 
               }
@@ -231,6 +261,9 @@ export class CreateDocumentComponent implements OnInit{
     return functions.invalidField(field, this.f, this.formSubmitted);
   }
 
+  onItemSelect($event){
+    console.log('$event is ', $event);
+  }
 
 
 

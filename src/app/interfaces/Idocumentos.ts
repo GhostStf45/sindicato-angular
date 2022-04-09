@@ -5,7 +5,7 @@ export interface Idocumentos {
   fechaDenuncia: string;
   lugar:string;
   actividad:string;
-  numeroTrabajadoresAfectados:string;
+  numeroTrabajadoresAfectados: any;
   lugarEmpresa:string;
   detalles:string;
 }
