@@ -15,7 +15,15 @@ import { CreateCategoryDocumentComponent } from './create-category-document/crea
 
 /* Angular material */
 
+/*
+MatNativeDateModule, MatMomentDateModule,
+
+*/
+
 import { MatTableModule} from '@angular/material/table';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -23,6 +31,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ListCategoryDocumentComponent } from './list-category-document/list-category-document.component';
 
@@ -41,7 +51,11 @@ import { ListCategoryDocumentComponent } from './list-category-document/list-cat
     MatInputModule,
     MatButtonModule,
     MatIconModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatToolbarModule,
+    MatFormFieldModule
   ]
 })
 export class DocumentsModule { }

@@ -1,1 +1,153 @@
-<p>create-document works!</p>
+<mat-dialog-content>
+  <div class="card card-warning">
+    <div class="card-header">
+      <div class="card-title">Nuevo documento</div>
+      <button type="button" class="close" mat-dialog-close>&times;</button>
+    </div>
+    <form
+      action=""
+      [formGroup]="f"
+      (ngSubmit)="saveDocument()"
+    >
+      <div class="card-body">
+        <ng-container>
+          <div class="form-group">
+            <label for="InputCategory">Tipo de documento</label>
+
+
+            <select
+              class="form-control"
+              formControlName="category"
+              [ngClass]="{'is-invalid': invalidField('category')}"
+            >
+              <option value="">Seleccione el tipo de documento</option>
+              <option *ngFor="let category of categories" value="{{ category.nombres}}">{{ category.nombres}}</option>
+
+            </select>
+
+
+
+            <span class="invalid-feedback" *ngIf="category.invalid && category.errors?.required"> Por favor, seleccione un tipo de documento</span>
+          </div>
+        </ng-container>
+        <ng-container>
+          <div class="form-group">
+            <label for="InputNombreDirigente">Nombre del dirigente</label>
+
+            <select
+              class="form-control"
+              formControlName="nombreDirigente"
+              [ngClass]="{'is-invalid': invalidField('nombreDirigente')}"
+            >
+              <option value="">Seleccione el dirigente</option>
+              <option *ngFor="let dirigente of dirigentes" value="{{ dirigente.nombres}}">{{ dirigente.nombres}}</option>
+
+            </select>
+            <span class="invalid-feedback" *ngIf="nombreDirigente.invalid && nombreDirigente.errors?.required"> Por favor, seleccione el dirigente</span>
+          </div>
+        </ng-container>
+        <ng-container>
+          <mat-form-field appearance="fill">
+            <mat-label>Escoge la fecha de la denuncia</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="fechaDenuncia">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </ng-container>
+        <ng-container>
+          <div class="form-group">
+            <label for="InputNombredocumento">Nombre del documento</label>
+            <input
+                  type="text" class="form-control"
+                  id="InputNombredocumento"
+                  placeholder="Nombre del documento"
+                  formControlName="nombreDocumento"
+                  [ngClass]="{'is-invalid': invalidField('nombreDocumento') || nombreDocumento.invalid && nombreDocumento.errors?.pattern}"
+            >
+            <span class="invalid-feedback" *ngIf="nombreDocumento.invalid && nombreDocumento.errors?.required"> Por favor, ingrese el nombre del documento</span>
+          </div>
+        </ng-container>
+        <ng-container>
+          <div>
+
+            <label for="">Provincia del denunciante</label>
+          </div>
+          <mat-form-field appearance="fill">
+            <mat-label>Seleccione el lugar </mat-label>
+            <mat-select formControlName="lugar">
+              <mat-option>-- None --</mat-option>
+              <mat-optgroup *ngFor="let group of departamentosGrupo" [label]="group.nombres"
+                            [disabled]="group.disabled">
+                <mat-option *ngFor="let provincias of group.provincia" [value]="provincias">
+                  {{provincias}}
+                </mat-option>
+              </mat-optgroup>
+            </mat-select>
+          </mat-form-field>
+
+        </ng-container>
+        <ng-container>
+          <div class="form-group">
+            <label for="InputActividad">Actividad</label>
+            <input
+                  type="text" class="form-control"
+                  id="InputActividad"
+                  placeholder="La actividad de la empresa"
+                  formControlName="actividad"
+                  [ngClass]="{'is-invalid': invalidField('actividad') || actividad.invalid && actividad.errors?.pattern}"
+            >
+            <span class="invalid-feedback" *ngIf="actividad.invalid && actividad.errors?.required"> Por favor, ingrese la actividad de la empresa</span>
+          </div>
+        </ng-container>
+        <ng-container>
+          <div class="form-group">
+            <label for="InputTrabajadores">Trabajadores</label>
+            <input
+                  type="text" class="form-control"
+                  id="InputTrabajadores"
+                  placeholder="Seleccione los trabajadores afectados"
+                  formControlName="numeroTrabajadoresAfectados"
+                  [ngClass]="{'is-invalid': invalidField('numeroTrabajadoresAfectados') || numeroTrabajadoresAfectados.invalid && numeroTrabajadoresAfectados.errors?.pattern}"
+            >
+            <span class="invalid-feedback" *ngIf="numeroTrabajadoresAfectados.invalid && numeroTrabajadoresAfectados.errors?.required"> Por favor, ingrese los trabajadores afectados</span>
+          </div>
+        </ng-container>
+        <ng-container>
+          <div>
+            <label for="">Provincia de la empresa denunciada</label>
+          </div>
+          <mat-form-field appearance="fill">
+            <mat-label>Seleccione el lugar </mat-label>
+            <mat-select formControlName="lugarEmpresa">
+              <mat-option>-- None --</mat-option>
+              <mat-optgroup *ngFor="let group of departamentosGrupo1" [label]="group.nombres"
+                            [disabled]="group.disabled">
+                <mat-option *ngFor="let provincias of group.provincia" [value]="provincias">
+                  {{provincias}}
+                </mat-option>
+              </mat-optgroup>
+            </mat-select>
+          </mat-form-field>
+
+        </ng-container>
+        <ng-container>
+          <div class="form-group">
+            <label for="InputDetalles">Detalles de la denuncia (Opcional)</label>
+            <textarea class="form-control" rows="3" id="InputDetalles"
+            formControlName="detalles"
+            ></textarea>
+          </div>
+        </ng-container>
+        <div *ngIf="loadData" class="overlay">
+            <i class="fas fa-2x fa-sync-alt fa-spin"></i>
+        </div>
+      </div>
+      <div class="card-footer">
+        <button mat-dialog-close class="btn btn-secondary">Cerrar</button>
+        <button type="submit" class="btn btn-warning float-right">Guardar</button>
+      </div>
+
+
+  </form>
+  </div>
+</mat-dialog-content>
