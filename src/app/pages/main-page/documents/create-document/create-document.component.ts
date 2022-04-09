@@ -8,6 +8,7 @@ import { CategorydocumentService } from 'src/app/services/categorydocument.servi
 import { AfiliadosService } from 'src/app/services/afiliados.service';
 import { functions } from 'src/app/helpers/functions';
 import { Idocumentos } from 'src/app/interfaces/Idocumentos';
+import { downloadArray } from '../upload-task/upload-task.component';
 
 import Swal from 'sweetalert2';
 
@@ -28,32 +29,23 @@ declare var require:any;
 @Component({
   selector: 'app-create-document',
   templateUrl: './create-document.component.html',
-  styleUrls: ['./create-document.component.css']
+  styleUrls: ['./create-document.component.scss']
 })
 export class CreateDocumentComponent implements OnInit{
 
   public ubigeo = require('../../../../../../node_modules/ubigeo-peru/src/ubigeo-reniec.json');
-
-
-
   /*
     BLOQUE DE VARIABLES PARA SELECCIONAR LUGAR
 
 
   */
-
-
   public departamentosGrupo: Departamentos[] = DepartamentosGrupo;
   public departamentosGrupo1: Departamentos[] = DepartamentosGrupo;
-
-
-
     /*
     ==================================================================
      ==================================================================
 
     */
-
      /*
       Multiselect form
 
@@ -64,9 +56,19 @@ export class CreateDocumentComponent implements OnInit{
 
     /*
     ====================================================
-
-
     */
+   /*
+    Drag and drop code block
+
+   */
+  isHovering: boolean;
+  files: File[]=[];
+
+  /*
+
+
+
+  */
 
   public f = this.form.group({
     /* Denunciante */
@@ -222,7 +224,8 @@ export class CreateDocumentComponent implements OnInit{
       actividad:this.f.controls.actividad.value,
       numeroTrabajadoresAfectados:this.f.controls.numeroTrabajadoresAfectados.value,
       lugarEmpresa:this.f.controls.lugarEmpresa.value,
-      detalles:this.f.controls.detalles.value
+      detalles:this.f.controls.detalles.value,
+      files: downloadArray
     }
 
     /* Guardar en la base de datos de documentos */
@@ -265,7 +268,18 @@ export class CreateDocumentComponent implements OnInit{
     console.log('$event is ', $event);
   }
 
+/* DRAG AND DROP FUNCTIONS */
+toggleHover(event:boolean){
+  this.isHovering = event;
+}
+onDrop(files: FileList){
+  for(let i = 0; i< files.length; i++){
+    this.files.push(files.item(i));
+    console.log(files);
+  }
+}
 
+/* */
 
 
 

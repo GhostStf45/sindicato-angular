@@ -33,7 +33,7 @@ export class DocumentsComponent implements OnInit {
   }
   newDocument(){
     const dialogRef = this.dialog.open(CreateDocumentComponent, {
-      maxWidth: '40vw',
+      maxWidth: '45vw',
       maxHeight: '80vh',
       height: '100%',
       width: '100%',

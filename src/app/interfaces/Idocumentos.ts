@@ -8,4 +8,5 @@ export interface Idocumentos {
   numeroTrabajadoresAfectados: any;
   lugarEmpresa:string;
   detalles:string;
+  files:any;
 }
