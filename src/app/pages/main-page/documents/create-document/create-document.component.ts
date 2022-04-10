@@ -240,6 +240,8 @@ export class CreateDocumentComponent implements OnInit{
         this.loadData = false;
         this.dialogRef.close('save');
         Swal.fire("Ok", "La informacion del documento ha sido enviado correctamente", "success");
+        downloadArray.splice(0, downloadArray.length);
+
 
       }, err => {
         Swal.fire("Error", "No se pudo enviar la información del documento", "error");
