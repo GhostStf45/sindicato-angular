@@ -6,8 +6,14 @@ export interface Iafiliados{
     dni?: string;
     email?: string;
     estado?: string;
+
     fecha_inscripcion?: string;
     telefono: string;
     tipo?: string;
+
+    departamento?: string;
+    provincia?: string;
+    distrito?: string;
+    avenida?: string;
 
 }

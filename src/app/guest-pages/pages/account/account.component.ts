@@ -10,6 +10,8 @@ import Swal from 'sweetalert2';
 declare var jQuery:any;
 declare var $:any;
 
+
+
 @Component({
   selector: 'app-account',
   templateUrl: './account.component.html',
@@ -21,12 +23,13 @@ export class AccountComponent implements OnInit {
   public f = this.form.group({
     nombres:['', { validators: [Validators.required, Validators.maxLength(50), Validators.pattern(/[.\\,\\0-9a-zA-ZáéíóúñÁÉÍÓÚÑ]{1,50}/) ]}],
     apellidos: ['', { validators: [Validators.required, Validators.maxLength(50), Validators.pattern(/[.\\,\\0-9a-zA-ZáéíóúñÁÉÍÓÚÑ]{1,50}/)]}],
-
     telefono: ['', { validators: [Validators.required, Validators.maxLength(9), Validators.pattern(/[.\\,\\0-9]{0,9}/)]}],
-
     area_laboral_: ['', { validators: [Validators.required, Validators.maxLength(50), Validators.pattern(/[.\\,\\a-zA-ZáéíóúñÁÉÍÓÚÑ]{1,50}/)]}],
-
     dni: ['', { validators: [Validators.required, Validators.maxLength(8), Validators.pattern(/[.\\,\\0-9]{0,9}/)]}],
+    departamento: ['', { validators: [Validators.required]}],
+    provincia: ['', { validators: [Validators.required]}],
+    distrito: ['', { validators: [Validators.required]}],
+    avenida: ['', { validators: [Validators.required]}],
 
   })
 
@@ -44,6 +47,10 @@ export class AccountComponent implements OnInit {
   tipo: string = "";
   estado: string = "";
   email_: string = "";
+  departamento_: string = "";
+  provincia_:string = "";
+  distrito_:string = "";
+  avenida_: string = "";
 
 
 
@@ -52,6 +59,10 @@ export class AccountComponent implements OnInit {
   get telefono(){ return this.f.controls.telefono}
   get area_laboral_() { return this.f.controls.area_laboral_}
   get dni_(){ return this.f.controls.dni}
+  get departamento(){ return this.f.controls.departamento}
+  get provincia(){ return this.f.controls.provincia}
+  get distrito(){ return this.f.controls.distrito}
+  get avenida(){ return this.f.controls.avenida}
 
 
   constructor(private activatedRoute: ActivatedRoute,private usersService: UsersService, private form: FormBuilder, private router: Router, private afiliadosService: AfiliadosService) { }
@@ -71,6 +82,10 @@ export class AccountComponent implements OnInit {
                     this.idAfiliado = resp[i].id;
                     this.estado = resp[i].estado;
                     this.email_ = resp[i].email;
+                    this.departamento_ = resp[i].departamento;
+                    this.provincia_ = resp[i].provincia;
+                    this.distrito_ = resp[i].distrito;
+                    this.avenida_ = resp[i].avenida;
 
                   if(resp[i].displayName != ""){
                     this.displayName = resp[i].displayName;
@@ -186,6 +201,11 @@ export class AccountComponent implements OnInit {
                       area_laboral: this.f.controls.area_laboral_.value,
                       telefono: this.f.controls.telefono.value,
                       dni: this.f.controls.dni.value,
+                      departamento: this.f.controls.departamento.value,
+                      provincia: this.f.controls.provincia.value,
+                      distrito: this.f.controls.distrito.value,
+                      avenida: this.f.controls.avenida.value,
+
                     }
                     /* Guardar en la base de datos la info del producto */
                     this.afiliadosService.patchData(this.idAfiliado, dataAfiliado).subscribe(
@@ -198,6 +218,7 @@ export class AccountComponent implements OnInit {
                         Swal.fire('Error', 'Error al actualizar su cuenta', "error");
                       }
                     )
+                    console.log(dataAfiliado);
                 }
       });
 

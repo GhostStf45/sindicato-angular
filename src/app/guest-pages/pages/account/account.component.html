@@ -107,10 +107,77 @@
                         <input type="text" class="form-control" id="inputName"  placeholder="Area Laboral" formControlName="area_laboral_" value="{{area_laboral_}}">
                       </div>
                     </div>
+
                     <div class="form-group row">
                       <label for="inputName" class="col-sm-2 col-form-label">DNI</label>
                       <div class="col-sm-10">
                         <input type="text" class="form-control" id="inputName" placeholder="DNI" formControlName="dni" value="{{dni_}}">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="" class="col-sm-2 col-form-label">Departamento</label>
+
+                      <div class="col-sm-10">
+                        <select name="selectDepartamento" onchange="cambia()" class="form-control" required="" formControlName="departamento">
+                          <option value="Amazonas">Amazonas</option>
+                          <option value="Ancash">Ancash</option>
+                          <option value="Apurímac">Apurímac</option>
+                          <option value="Arequipa">Arequipa</option>
+                          <option value="Ayacucho">Ayacucho</option>
+                          <option value="Cajamarca">Cajamarca</option>
+                          <option value="Callao">Callao</option>
+                          <option value="Cuzco">Cuzco </option>
+                          <option value="Huancavelica">Huancavelica</option>
+                          <option value="Huánuco">Huánuco</option>
+                          <option value="Ica">Ica</option>
+                          <option value="Junín">Junín</option>
+                          <option value="La_Libertad">La Libertad</option>
+                          <option value="Lambayeque">Lambayeque</option>
+                          <option value="Lima">Lima</option>
+                          <option value="Loreto">Loreto</option>
+                          <option value="Madre_de_Dios">Madre de Dios</option>
+                          <option value="Moquegua">Moquegua</option>
+                          <option value="Pasco">Pasco</option>
+                          <option value="Piura">Piura</option>
+                          <option value="Puno">Puno</option>
+                          <option value="San_Martín">San Martín</option>
+                          <option value="Tacna">Tacna</option>
+                          <option value="Tumbes">Tumbes</option>
+                          <option value="Ucayali">Ucayali</option>
+                          </select>
+                          <span>
+                            Su departamento actual: {{ departamento_ }}
+                          </span>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="" class="col-sm-2 col-form-label">Provincia</label>
+                      <div class="col-sm-10">
+                        <select class="form-control" name="selectProvincia" onchange="cambiaDistrito()" required=""  formControlName="provincia">
+                          <option>Seleccione la Provincia</option>
+                        </select>
+                        <span>
+                          Su provincia actual: {{ provincia_ }}
+                        </span>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="" class="col-sm-2 col-form-label">Distrito</label>
+
+                      <div class="col-sm-10">
+                        <select class="form-control" name="selectDistrito" required="" formControlName="distrito"><option>Seleccione el Distrito</option>
+                        </select>
+                        <span>
+                          Su distrito actual: {{ distrito_ }}
+                        </span>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="" class="col-sm-2 col-form-label">Avenida donde labora</label>
+                      <div class="col-sm-10">
+                        <div class="col-sm-10">
+                          <input type="text" class="form-control" id="" placeholder="Av. Calle 123" formControlName="avenida" value="{{ avenida_ }}">
+                        </div>
                       </div>
                     </div>
                     <div class="form-group row">
@@ -231,3 +298,4 @@
     </div>
   </div>
 </div>
+
