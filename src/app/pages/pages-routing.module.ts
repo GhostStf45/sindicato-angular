@@ -15,11 +15,11 @@ const routes: Routes = [
 	  	{ path: '', loadChildren: () => import('./main-page/home/home.module').then(m=>m.HomeModule)},
 	  	{ path: 'documents', loadChildren: () => import('./main-page/documents/documents.module').then(m=>m.DocumentsModule)},
 	  	{ path: 'afiliados', loadChildren: () => import('./main-page/afiliados/afiliados.module').then(m=>m.AfiliadosModule)},
+	  	{ path: 'dashboard-afiliados', loadChildren: () => import('./main-page/dashboard-afiliados/dashboard-afiliados.module').then(m=>m.DashboardAfiliadosModule)},
 	  	{ path: 'stores', loadChildren: () => import('./main-page/stores/stores.module').then(m=>m.StoresModule)},
 	    { path: 'products', loadChildren: () => import('./main-page/products/products.module').then(m=>m.ProductsModule)},
 	  	{ path: 'orders', loadChildren: () => import('./main-page/orders/orders.module').then(m=>m.OrdersModule)},
 	  	{ path: 'sales', loadChildren: () => import('./main-page/sales/sales.module').then(m=>m.SalesModule)},
-	  	{ path: 'disputes', loadChildren: () => import('./main-page/disputes/disputes.module').then(m=>m.DisputesModule)},
 	  	{ path: 'messages', loadChildren: () => import('./main-page/messages/messages.module').then(m=>m.MessagesModule)},
 
 	  ], canActivate: [AfiliadosGuard, AuthGuard]

@@ -11,6 +11,10 @@ export class DocumentsService {
 
   constructor(private http:HttpClient) { }
 
+  getData(){
+    return this.http.get(`${this.api}documentos.json`);
+  }
+
   getFilterData(orderBy: string, equalTo: string){
     return this.http.get(`${this.api}documentos.json?orderBy="${orderBy}"&equalTo="${equalTo}"&print=pretty`);
   }

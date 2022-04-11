@@ -23,24 +23,203 @@
       <!-- Default box -->
       <div class="card">
         <div class="card-header">
-          <div class="row mb-2">
-            <div class="col-md-2">
-              <button class="btn btn-sm bg-gradient-warning" type="button" (click)="newCategory()">Añadir nuevo tipo de documento</button>
+          <div [hidden]="loadData" class="row mb-2">
+            <div class="col-md-3">
+              <div class="dropdown show">
+                <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Administrar Documentos
+                </a>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                  <button class="dropdown-item" type="button" (click)="newCategory()">Añadir nuevo tipo de documento</button>
+                  <button class="dropdown-item" type="button" (click)="listCategory()">Ver tipos de documentos</button>
+                  <button class="dropdown-item" type="button" (click)="newDocument()">Añadir documento</button>
+                </div>
+              </div>
             </div>
-            <div class="col-md-2">
-              <button class="btn btn-sm bg-gradient-info" type="button" (click)="listCategory()">Ver tipos de documentos</button>
+
+            <div class="col-6 col-sm-12 col-xl-3 ml-auto">
+              <input class="form-control" placeholder="Buscar...." (keyup)="applyFilter($event)">
             </div>
-            <div class="col-md-2">
-              <button class="btn btn-sm bg-gradient-secondary" type="button" (click)="newDocument()">Añadir documento</button>
+          </div>
+          <div [hidden]="loadData" class="row mb-2">
+            <div class="col-md-3">
+              <button mat-raised-button color="primary" (click)="exportXLSX()"><mat-icon>trending_down</mat-icon>Exportar a Excel</button>
             </div>
           </div>
         </div>
         <div class="card-body">
-          Start creating your amazing application!
+          <div class="mat-table-container">
+            <table [hidden]="loadData" mat-table [dataSource]="dataSource" class="mat-elevation-z8 matTable-table" multiTemplateDataRows matSort >
+
+              <ng-container matColumnDef="position">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por numero de orden" >
+                  No.
+                </th>
+                <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+              </ng-container>
+
+
+              <ng-container matColumnDef="nombreDocumento">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por nombre del documento">
+                  Nombre del documento
+                </th>
+                <td mat-cell *matCellDef="let element"> {{element.nombreDocumento}} </td>
+              </ng-container>
+
+
+              <ng-container *ngIf="!screenSizeSM" matColumnDef="actividad">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por actividad">
+                  Actividad
+                </th>
+                <td mat-cell *matCellDef="let element"> {{element.actividad}} </td>
+              </ng-container>
+
+              <ng-container *ngIf="!screenSizeSM" matColumnDef="category">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por tipo de documento">
+                  Tipo de documento
+                </th>
+                <td mat-cell *matCellDef="let element"> {{element.category}} </td>
+              </ng-container>
+
+              <ng-container *ngIf="!screenSizeSM" matColumnDef="detalles">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por descripcion de la denuncia">
+                  Detalles de la denuncia
+                </th>
+                <td mat-cell *matCellDef="let element"> {{element.detalles}} </td>
+              </ng-container>
+
+              <ng-container *ngIf="!screenSizeSM" matColumnDef="fechaDenuncia">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por fecha de denuncia">
+                  Fecha de la denuncia
+                </th>
+                <td mat-cell *matCellDef="let element"> {{element.fechaDenuncia}} </td>
+              </ng-container>
+
+
+              <ng-container *ngIf="!screenSizeSM" matColumnDef="lugar">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por lugar del denunciante">
+                  Lugar del denunciante
+                </th>
+                <td mat-cell *matCellDef="let element"> {{element.lugar}} </td>
+              </ng-container>
+
+              <ng-container *ngIf="!screenSizeSM" matColumnDef="lugarEmpresa">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por lugar de la empresa">
+                  Lugar de la empresa
+                </th>
+                <td mat-cell *matCellDef="let element"> {{element.lugarEmpresa}} </td>
+              </ng-container>
+
+              <ng-container *ngIf="!screenSizeSM" matColumnDef="nombreDirigente">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por nombre del dirigente">
+                  Nombre del dirigente
+                </th>
+                <td mat-cell *matCellDef="let element"> {{element.nombreDirigente}} </td>
+              </ng-container>
+              <ng-container matColumnDef="acciones">
+                <th mat-header-cell *matHeaderCellDef>
+                 Acciones
+                </th>
+                <td mat-cell *matCellDef="let element">
+                  <button
+                    class="btn btn-sm btn-warning mr-2"
+                    (click)="expandedElement = expandedElement === element ? null : element"
+
+                  ><i class="fa fa-eye"></i></button>
+                </td>
+              </ng-container>
+
+            <ng-container matColumnDef="expandedDetail">
+              <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+                <div class="example-element-detail"
+                      [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                  <ul class="pl-0">
+                    <li class="py-2">
+                      <span class="mx-2 text-muted">.</span>
+                      <strong class="mat-header-cell">Nombre del documento:</strong>
+                      {{element.nombreDocumento}}
+
+                    </li>
+                    <li class="py-2">
+                      <span class="mx-2 text-muted">.</span>
+                      <strong class="mat-header-cell">Actividad</strong>
+                      {{element.actividad}}
+
+                    </li>
+                    <li class="py-2">
+                      <span class="mx-2 text-muted">.</span>
+                      <strong class="mat-header-cell">Categoria</strong>
+                      {{element.category}}
+
+                    </li>
+                    <li class="py-2">
+                      <span class="mx-2 text-muted">.</span>
+                      <strong class="mat-header-cell">Detalles</strong>
+                      {{element.detalles}}
+                    </li>
+                    <li class="py-2">
+                      <span class="mx-2 text-muted">.</span>
+                      <strong class="mat-header-cell">Fecha de la Denuncia</strong>
+                      {{element.fechaDenuncia}}
+                    </li>
+                    <li class="py-2">
+                      <span class="mx-2 text-muted">.</span>
+                      <strong class="mat-header-cell">Lugar del denunciante</strong>
+                      {{element.lugar}}
+                    </li>
+                    <li class="py-2">
+                      <span class="mx-2 text-muted">.</span>
+                      <strong class="mat-header-cell">Lugar de la empresa</strong>
+                      {{element.lugarEmpresa}}
+                    </li>
+                    <li class="py-2">
+                      <span class="mx-2 text-muted">.</span>
+                      <strong class="mat-header-cell">Nombre del dirigente</strong>
+                      {{element.nombreDirigente}}
+                    </li>
+                    <li class="py-2">
+                      <span class="mx-2 text-muted">.</span>
+                      <strong class="mat-header-cell">Listado de trabajadores afectados</strong>
+                      <ul>
+                        <li *ngFor="let trabajador of element.numeroTrabajadoresAfectados">{{ trabajador.displayName}}</li>
+                      </ul>
+                    </li>
+                    <li class="py-2">
+                      <span class="mx-2 text-muted">.</span>
+                      <strong class="mat-header-cell">Documentos de denuncia y/o Sustentos</strong>
+                      <ul>
+                        <li *ngFor="let file of element.files"><a href="{{file.downloadUrl}}" class="text-success">{{file.path}}"</a></li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+              </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let element; columns: displayedColumns;"
+                class="example-element-row"
+                [class.example-expanded-row]="expandedElement === element"
+              >
+            </tr>
+            <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+            <tr class="mat-row" *matNoDataRow>
+              <td class="mat-cell text-center" colspan="4" [attr.colspan]="displayedColumns.length">No ha encontrado los datos de busqueda.</td>
+            </tr>
+
+            </table>
+            <div *ngIf="loadData" class="text-center m-5">
+              <div  class="spinner-border"></div>
+            </div>
+
+          </div>
+
         </div>
         <!-- /.card-body -->
         <div class="card-footer">
-          Footer
+          <mat-paginator [hidden]="loadData" [pageSizeOptions]="[5, 10, 20]"
+          showFirstLastButtons
+          aria-label="Seleccione la pagina de afiliados">
+          </mat-paginator>
         </div>
         <!-- /.card-footer-->
       </div>

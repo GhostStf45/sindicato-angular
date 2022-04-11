@@ -11,12 +11,6 @@ import {ExporterService } from '../../../services/exporter.service';
 
 import { ApproveAfiliadoComponent } from './approve-afiliado/approve-afiliado.component';
 
-/*
-  TODO : TERMINAR LA APROBACIÓN DE LOS AFILIADOS Y/O PARTICIPANTES VIDEO UDEMY 137
-
-
-
-*/
 
 @Component({
   selector: 'app-afiliados',
