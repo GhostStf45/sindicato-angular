@@ -103,10 +103,6 @@ export class AccountComponent implements OnInit {
                   this.area_laboral_.setValue(resp[i].area_laboral);
 
 
-                  localStorage.setItem("tipo", resp[i].tipo);
-                  localStorage.setItem("displayName", resp[i].displayName);
-                  localStorage.setItem("dni", resp[i].dni);
-                  localStorage.setItem("fecha_inscripcion", resp[i].fecha_incripcion);
 
 
                 }
@@ -179,6 +175,7 @@ export class AccountComponent implements OnInit {
     localStorage.removeItem("displayName");
     localStorage.removeItem("dni");
     localStorage.removeItem("fecha_inscripcion");
+    localStorage.removeItem("id");
     window.open('login', "_top");
   }
 

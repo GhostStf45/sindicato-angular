@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GoogleChartsModule } from 'angular-google-charts';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 //ruta
 import { DashboardAfiliadosComponentRoutingModule } from './dashboard-afiliados-routing.module';
 
@@ -14,7 +15,9 @@ import { DashboardAfiliadosComponent } from './dashboard-afiliados.component';
   imports: [
     CommonModule,
     DashboardAfiliadosComponentRoutingModule,
-    GoogleChartsModule
+    GoogleChartsModule,
+    NgxChartsModule
+
   ]
 })
 export class DashboardAfiliadosModule { }

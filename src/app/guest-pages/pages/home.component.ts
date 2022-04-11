@@ -55,7 +55,10 @@ export class HomeComponent implements OnInit {
         this.authValidate =true;
         this.usersService.getFilterData("idToken", localStorage.getItem("idToken"))
             .subscribe( resp => {
+              var id = Object.keys(resp).toString();
+              console.log(id);
               for( const i in resp){
+
                 if(resp[i].displayName != ""){
                   this.displayName = `<span class="font-weight-bold">${resp[i].displayName} | Mi cuenta </span><i class="fas fa-angle-down ml-2"></i>`;
                 }
@@ -64,10 +67,12 @@ export class HomeComponent implements OnInit {
                 }else{
                   this.tipo = "Invitado";
                 }
+                console.log(resp[i]);
                 localStorage.setItem("tipo", resp[i].tipo);
                 localStorage.setItem("displayName", resp[i].displayName);
                 localStorage.setItem("dni", resp[i].dni);
                 localStorage.setItem("fecha_inscripcion", resp[i].fecha_incripcion);
+                localStorage.setItem("id", id);
 
 
               }

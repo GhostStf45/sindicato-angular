@@ -36,16 +36,34 @@
               </div>
             </div>
             <div class="card-body">
-              <google-chart
+              <div *ngIf="chart">
+                <canvas id="canvas">
+                  {{ chart }}
+                </canvas>
+              </div>
+              <!-- <google-chart
                 [title]="chart.title"
                 [type]="chart.type"
                 [data]="chart.data"
                 [columns]="chart.columnNames"
                 [options]="chart.options"
-
                 style="width: 100%"
               >
-            </google-chart>
+            </google-chart> -->
+            <!-- <ngx-charts-pie-chart
+            [view]="view"
+            [scheme]="colorScheme"
+            [results]="single"
+            [gradient]="gradient"
+            [legend]="showLegend"
+            [legendPosition]="legendPosition"
+            [labels]="showLabels"
+            [doughnut]="isDoughnut"
+            (select)="onSelect($event)"
+            (activate)="onActivate($event)"
+            (deactivate)="onDeactivate($event)"
+            >
+          </ngx-charts-pie-chart> -->
             </div>
           </div>
         </div>
