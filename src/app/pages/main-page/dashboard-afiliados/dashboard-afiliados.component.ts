@@ -1,15 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { DocumentsService } from 'src/app/services/documents.service';
 import { UsersService } from 'src/app/services/users.service';
 import { Chart,DoughnutController, BarController, BarElement, PointElement, LinearScale, Title, CategoryScale, ArcElement, Tooltip,
   LineElement, PolarAreaController, RadialLinearScale, TimeScale, Legend  } from 'node_modules/chart.js';
 
+  import { MatTableDataSource } from '@angular/material/table';
+  import { MatPaginator } from '@angular/material/paginator';
+  import { MatSort } from '@angular/material/sort';
+import { functions } from 'src/app/helpers/functions';
+import {animate, state, style, transition, trigger} from '@angular/animations';
+import {ExporterService } from '../../../services/exporter.service';
 
 
 @Component({
   selector: 'app-dashboard-afiliados',
   templateUrl: './dashboard-afiliados.component.html',
-  styleUrls: ['./dashboard-afiliados.component.css']
+  styleUrls: ['./dashboard-afiliados.component.css'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ])
+  ]
 })
 export class DashboardAfiliadosComponent implements OnInit {
 
@@ -17,52 +30,41 @@ export class DashboardAfiliadosComponent implements OnInit {
   chart: any =[];
 
   authValidate:boolean = false;
-
-
   formSubmitted = false;
-
   loadData = false;
-
   idAfiliado = "";
 
+  displayedColumns: string[] = ['position',	'nombreDocumento', 'category', 'acciones'];
+  dataSource!: MatTableDataSource<any>;
+  screenSizeSM = false;
+
   documentos = [];
-  labels =  [];
+  expandedElement: [] | null;
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
 
-
-  // chart: any = {
-  //   title:"Documentos por tipo",
-  //   type:"PieChart",
-  //   data: [] ,
-  //   columnNames:["Tipo documentos", "Total"],
-  //   options: {}
-  // }
-
-  // single: any[];
-  // view: any[] = [700, 400];
-
-  // options
-  // gradient: boolean = true;
-  // showLegend: boolean = true;
-  // showLabels: boolean = true;
-  // isDoughnut: boolean = false;
-  // legendPosition: string = 'below';
-
-  // colorScheme = {
-  //   domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
-  // };
 
   /* Rangos de fechas */
 
   startDate =  new Date(new Date().getFullYear(),0,1);
   endDate = new Date();
 
-  constructor(private documentsService: DocumentsService, private usersService: UsersService) {
+  constructor(private documentsService: DocumentsService, private usersService: UsersService, private exporterService: ExporterService) {
     Chart.register(DoughnutController,BarController, BarElement, PointElement, LinearScale, Title, CategoryScale, ArcElement, Tooltip,LineElement, PolarAreaController, RadialLinearScale, TimeScale, Legend  );
    }
 
   ngOnInit(): void {
     this.getDataDocuments();
+
+    if(functions.screenSize(0,767)){
+      this.screenSizeSM = true;
+    }else{
+      this.screenSizeSM = false;
+      this.displayedColumns.splice(3,0,'url')
+
+    }
 
     //console.log("startDate", this.startDate);
   }
@@ -78,37 +80,53 @@ export class DashboardAfiliadosComponent implements OnInit {
       let resultado;
       let resultado1 =[];
       let locallabel1 = [];
-        // this.documentos = Object.keys(resp).forEach( key => {
-        //   Object.values(resp[key].numeroTrabajadoresAfectados).map((key1, index1)=>{
-        //     if(key1['id'] == this.idAfiliado){
-        //       data = [resp[key].category, resp[key].files.length];
-        //     }
-        //   });
-        // });
 
-        Object.keys(resp).map( a => {
+      let nombreDoc = [];
+      let path1=[];
+      let url1 = [];
+      let contador = 0;
+
+        Object.keys(resp).map( (a, index) => {
           for( var i = 0; i < resp[a].numeroTrabajadoresAfectados.length; i++){
-            if(resp[a].numeroTrabajadoresAfectados[i]['id'] == this.idAfiliado){
-                data = resp[a].files.length;
-                locallabel = resp[a].category;
+              if(resp[a].numeroTrabajadoresAfectados[i]['id'] == this.idAfiliado){
+                  data = resp[a].files.length;
+                  locallabel = resp[a].category;
+                  dataset_ = [resp[a].category, resp[a].files.length];
+                  dataset1.push([resp[a].category, resp[a].files.length]);
+                  for( var j = 0; j < resp[a].files.length; j++){
+                    url1.push( resp[a].files[i]['downloadUrl']);
+                    contador ++ ;
 
-                dataset_ = [resp[a].category, resp[a].files.length];
-                dataset1.push([resp[a].category, resp[a].files.length]);
+                    // nombreDoc.push(resp[a].nombreDocumento);
+                    // categorias1.push(resp[a].category);
+                    let position = 1;
+
+                    this.documentos = Object.keys(resp).map((a, index) =>({
+                        position: position++,
+                        nombreDocumento: resp[a].nombreDocumento,
+                        category: resp[a].category,
+                        url: url1[index++],
+
+                    }))
 
 
-                // contador++;
-                //console.log(resp[a].files[j]['downloadUrl']);
-                // console.log(resp[a].fechaDenuncia);
-                // console.log(resp[a].category);
-                //console.log(dataset_);
-                this.documentos.push(data);
-                this.labels.push(locallabel);
+
+
+                    this.dataSource = new MatTableDataSource(this.documentos);
+                    this.dataSource.paginator = this.paginator;
+                    this.dataSource.sort = this.sort;
+                  }
+                }
+
               }
+
+
 
             }
 
-          }
-          )
+            )
+            console.log(this.documentos);
+
 
         resultado = Object.values(dataset1.reduce((c, v) => {
           if (c[v[0]])
@@ -164,25 +182,21 @@ export class DashboardAfiliadosComponent implements OnInit {
           }
         })
         console.log(this.chart);
-        // this.chart.data.push(this.documentos);
 
-        //this.documentos = [...  this.documentos];
-
-        //console.log('2',this.chart.data);
     })
 
   }
+  /* Filtro de busqueda */
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    console.log(filterValue);
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
 
-  // onSelect(data): void {
-  //   console.log('Item clicked', JSON.parse(JSON.stringify(data)));
-  // }
-
-  // onActivate(data): void {
-  //   console.log('Activate', JSON.parse(JSON.stringify(data)));
-  // }
-
-  // onDeactivate(data): void {
-  //   console.log('Deactivate', JSON.parse(JSON.stringify(data)));
-  // }
-
+    }
+  }
+  exportXLSX(){
+    this.exporterService.exportToExcel(this.dataSource.data, 'tusdocumentos');
+}
 }

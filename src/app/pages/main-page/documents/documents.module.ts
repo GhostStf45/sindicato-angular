@@ -43,9 +43,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ListCategoryDocumentComponent } from './list-category-document/list-category-document.component';
-import { UploadTaskComponent } from './upload-task/upload-task.component';
-import { DropzoneDirective } from './dropzone.directive';
 import { environment } from 'src/environments/environment';
+import { DropzoneDirective } from './dropzone.directive';
+import { UploadTaskComponent } from './upload-task/upload-task.component';
 
 @NgModule({
   declarations: [DocumentsComponent, CreateDocumentComponent, CreateCategoryDocumentComponent, ListCategoryDocumentComponent, UploadTaskComponent, DropzoneDirective],

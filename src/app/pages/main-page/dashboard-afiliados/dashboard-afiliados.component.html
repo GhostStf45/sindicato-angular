@@ -21,7 +21,123 @@
     <section class="content">
 
       <div class="row">
-        <div class="col-6">
+        <div class="col-md-6 col-sm 12">
+          <div class="card">
+            <div class="card-header">
+              <div class="row">
+                <h3>Listado de sus documentos</h3>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-md-3">
+                  <button mat-raised-button color="primary" (click)="exportXLSX()"><mat-icon>trending_down</mat-icon>Exportar a Excel</button>
+                </div>
+                <div class="col-6 col-sm-12 col-xl-3 ml-auto">
+                  <input class="form-control" placeholder="Buscar...." (keyup)="applyFilter($event)">
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="mat-table-container">
+                <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 matTable-table" multiTemplateDataRows matSort >
+
+                  <ng-container matColumnDef="position">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por numero de orden" >
+                      No.
+                    </th>
+                    <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                  </ng-container>
+
+
+                  <ng-container matColumnDef="nombreDocumento">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por nombre del documento">
+                      Nombre del documento
+                    </th>
+                    <td mat-cell *matCellDef="let element"> {{element.nombreDocumento}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="category">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por categoria">
+                      Tipo de documento
+                    </th>
+                    <td mat-cell *matCellDef="let element"> {{element.category}} </td>
+                  </ng-container>
+
+
+                  <ng-container *ngIf="!screenSizeSM" matColumnDef="url">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por url">
+                      Url de descarga
+                    </th>
+                    <td mat-cell *matCellDef="let element"><a href="{{element.url}}">{{element.url}}</a></td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="acciones">
+                    <th mat-header-cell *matHeaderCellDef>
+                     Acciones
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      <button
+                        class="btn btn-sm btn-warning mr-2"
+                        (click)="expandedElement = expandedElement === element ? null : element"
+
+                      ><i class="fa fa-eye"></i></button>
+                    </td>
+                  </ng-container>
+
+                <ng-container matColumnDef="expandedDetail">
+                  <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+                    <div class="example-element-detail"
+                          [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                      <ul class="pl-0">
+                        <li class="py-2">
+                          <span class="mx-2 text-muted">.</span>
+                          <strong class="mat-header-cell">Nombre del documento:</strong>
+                          {{element.nombreDocumento}}
+
+                        </li>
+                        <li class="py-2">
+                          <span class="mx-2 text-muted">.</span>
+                          <strong class="mat-header-cell">Categoria</strong>
+                          {{element.category}}
+                        </li>
+                        <li class="py-2">
+                          <span class="mx-2 text-muted">.</span>
+                          <strong class="mat-header-cell">Url de descarga </strong>
+                          <a href="{{element.url}}">{{element.url}}</a>
+
+                        </li>
+                      </ul>
+                    </div>
+                  </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let element; columns: displayedColumns;"
+                    class="example-element-row"
+                    [class.example-expanded-row]="expandedElement === element"
+                  >
+                </tr>
+                <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+                <tr class="mat-row" *matNoDataRow>
+                  <td class="mat-cell text-center" colspan="4" [attr.colspan]="displayedColumns.length">No ha encontrado los datos de busqueda.</td>
+                </tr>
+
+                </table>
+
+              </div>
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer bg-white">
+              <mat-paginator [hidden]="loadData" [pageSizeOptions]="[5, 10, 20]"
+                showFirstLastButtons
+                aria-label="Seleccione la pagina de afiliados">
+                </mat-paginator>
+            </div>
+            <!-- /.card-footer-->
+          </div>
+
+
+        </div>
+        <div class="col-md-6 col-sm-12">
           <div class="card">
             <div class="card-header">
               <h3 class="card-title">Reporte de documentos totales por tipo</h3>
@@ -36,34 +152,11 @@
               </div>
             </div>
             <div class="card-body">
-              <div *ngIf="chart">
-                <canvas id="canvas">
+              <div *ngIf="chart" >
+                <canvas id="canvas" class="w-100">
                   {{ chart }}
                 </canvas>
               </div>
-              <!-- <google-chart
-                [title]="chart.title"
-                [type]="chart.type"
-                [data]="chart.data"
-                [columns]="chart.columnNames"
-                [options]="chart.options"
-                style="width: 100%"
-              >
-            </google-chart> -->
-            <!-- <ngx-charts-pie-chart
-            [view]="view"
-            [scheme]="colorScheme"
-            [results]="single"
-            [gradient]="gradient"
-            [legend]="showLegend"
-            [legendPosition]="legendPosition"
-            [labels]="showLabels"
-            [doughnut]="isDoughnut"
-            (select)="onSelect($event)"
-            (activate)="onActivate($event)"
-            (deactivate)="onDeactivate($event)"
-            >
-          </ngx-charts-pie-chart> -->
             </div>
           </div>
         </div>

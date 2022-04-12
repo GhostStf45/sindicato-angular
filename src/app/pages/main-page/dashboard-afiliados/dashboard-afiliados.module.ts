@@ -9,6 +9,23 @@ import { DashboardAfiliadosComponentRoutingModule } from './dashboard-afiliados-
 import { DashboardAfiliadosComponent } from './dashboard-afiliados.component';
 
 
+import { MatTableModule} from '@angular/material/table';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { environment } from 'src/environments/environment';
+
+
 
 @NgModule({
   declarations: [DashboardAfiliadosComponent],
@@ -16,7 +33,20 @@ import { DashboardAfiliadosComponent } from './dashboard-afiliados.component';
     CommonModule,
     DashboardAfiliadosComponentRoutingModule,
     GoogleChartsModule,
-    NgxChartsModule
+    NgxChartsModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatDialogModule,
+    MatSelectModule,
+    MatInputModule,
+    MatButtonModule,
+    MatIconModule,
+    MatSlideToggleModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatToolbarModule,
+    MatFormFieldModule,
 
   ]
 })
