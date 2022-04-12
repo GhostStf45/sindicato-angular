@@ -6,38 +6,159 @@
         <div class="row mb-2">
           <div class="col-sm-6">
             <h1>Home</h1>
-          </div> 
+          </div>
         </div>
       </div><!-- /.container-fluid -->
     </section>
+
+    <div class="row">
+      <div class="col-12 col-sm-6 col-md-6">
+        <div class="info-box mb-3">
+          <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
+
+          <div class="info-box-content">
+            <span class="info-box-text">Afiliados</span>
+            <span class="info-box-number">{{ contadorAfiliados }} </span>
+          </div>
+          <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+      </div>
+      <!-- /.col -->
+      <div class="col-12 col-sm-6 col-md-6">
+        <div class="info-box mb-3">
+          <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-file"></i></span>
+
+          <div class="info-box-content">
+            <span class="info-box-text">Documentos totales</span>
+            <span class="info-box-number">{{ contadorDocumentos }}</span>
+          </div>
+          <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+      </div>
+      <!-- /.col -->
+    </div>
 
     <!-- Main content -->
     <section class="content">
 
       <!-- Default box -->
-      <div class="card">
-        <div class="card-header">
-          <h3 class="card-title">Title</h3>
+      <div class="row">
 
-          <div class="card-tools">
-            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-              <i class="fas fa-minus"></i>
-            </button>
-            <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
-              <i class="fas fa-times"></i>
-            </button>
+        <div class="col-md-6 col-sm-12">
+
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Total Afiliados por estado</h3>
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                  <i class="fas fa-minus"></i>
+                </button>
+              </div>
+            </div>
+            <div class="card-body">
+              <div *ngIf="chart" >
+                <canvas id="canvas" class="w-100"  style="max-height: 385px;">
+                  {{ chart }}
+                </canvas>
+              </div>
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer">
+              Footer
+            </div>
+            <!-- /.card-footer-->
+          </div>
+          <!-- /.card -->
+        </div>
+        <div class="col-md-6 col-sm-12">
+
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Total documentos por tipo</h3>
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                  <i class="fas fa-minus"></i>
+                </button>
+              </div>
+            </div>
+            <div class="card-body">
+              <div *ngIf="chart" >
+                <canvas id="barra" class="w-100">
+                  {{ chart }}
+                </canvas>
+              </div>
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer">
+              Footer
+            </div>
+            <!-- /.card-footer-->
+          </div>
+          <!-- /.card -->
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-sm-12">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Total afiliados por departamento</div>
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                  <i class="fas fa-minus"></i>
+                </button>
+              </div>
+            </div>
+            <div class="card-body">
+              <div *ngIf="chart" >
+                <canvas id="departamentosGrafica" class="w-100">
+                  {{ chart }}
+                </canvas>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="card-body">
-          Start creating your amazing application!
+        <div class="col-md-6 col-sm-12">
+          <div class="card">
+            <div class="card-header border-transparent">
+                <h3 class="card-title">Ultimos afiliados registrados</h3>
+                <div class="table-responsive">
+                  <table class="table m-0">
+                    <thead>
+                      <tr>
+                        <th>Nombre completo</th>
+                        <th>Tipo de integrante</th>
+                        <th>Estado</th>
+                        <th>Fecha</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let afiliado of latestAfiliados.reverse()">
+                          <td>{{ afiliado.displayName }}</td>
+                          <td>{{ afiliado.tipo }}</td>
+                          <td>
+                            <span *ngIf="afiliado.estado == 'Activo'">
+                              <span class="badge bg-success p-2">{{afiliado.estado}}</span>
+                            </span>
+                            <span *ngIf="afiliado.estado == 'Inhabilitado'">
+                              <span class="badge bg-danger p-2">{{afiliado.estado}}</span>
+                            </span>
+                            <span *ngIf="afiliado.estado == 'En espera'">
+                              <span class="badge bg-warning p-2">{{afiliado.estado}}</span>
+                            </span>
+
+                          </td>
+                          <td>{{ afiliado.fecha_registro }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+            </div>
+          </div>
         </div>
-        <!-- /.card-body -->
-        <div class="card-footer">
-          Footer
-        </div>
-        <!-- /.card-footer-->
       </div>
-      <!-- /.card -->
 
     </section>
     <!-- /.content -->

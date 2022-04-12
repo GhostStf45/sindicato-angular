@@ -13,6 +13,7 @@ const routes: Routes = [
 	  component: MainPageComponent,
 	  children: [
 	  	{ path: '', loadChildren: () => import('./main-page/home/home.module').then(m=>m.HomeModule)},
+	  	{ path: 'home', loadChildren: () => import('./main-page/home/home.module').then(m=>m.HomeModule)},
 	  	{ path: 'documents', loadChildren: () => import('./main-page/documents/documents.module').then(m=>m.DocumentsModule)},
 	  	{ path: 'afiliados', loadChildren: () => import('./main-page/afiliados/afiliados.module').then(m=>m.AfiliadosModule)},
 	  	{ path: 'dashboard-afiliados', loadChildren: () => import('./main-page/dashboard-afiliados/dashboard-afiliados.module').then(m=>m.DashboardAfiliadosModule)},

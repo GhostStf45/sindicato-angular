@@ -16,6 +16,20 @@
         </div>
       </div><!-- /.container-fluid -->
     </section>
+    <section class="content">
+      <div class="col-12 col-sm-6 col-md-3">
+      <div class="info-box mb-3">
+        <span class="info-box-icon bg-success elevation-1"><i class="fas fa-file-alt"></i></span>
+
+        <div class="info-box-content">
+          <span class="info-box-text">Documentos totales</span>
+          <span class="info-box-number">{{ contador }}</span>
+        </div>
+        <!-- /.info-box-content -->
+      </div>
+      <!-- /.info-box -->
+      </div>
+    </section>
 
     <!-- Main content -->
     <section class="content">
@@ -37,7 +51,7 @@
                 </div>
               </div>
             </div>
-            <div class="card-body">
+            <div class="card-body" style="height: 100% !important;">
               <div class="mat-table-container">
                 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 matTable-table" multiTemplateDataRows matSort >
 
@@ -140,7 +154,7 @@
         <div class="col-md-6 col-sm-12">
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title">Reporte de documentos totales por tipo</h3>
+              <h3 class="card-title">Documentos por tipo</h3>
 
               <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -153,12 +167,40 @@
             </div>
             <div class="card-body">
               <div *ngIf="chart" >
-                <canvas id="canvas" class="w-100">
+                <canvas id="canvas" style="max-height: 454px;" class="w-100">
                   {{ chart }}
                 </canvas>
               </div>
+
             </div>
           </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">
+                Documentos totales por fecha personalizada
+              </div>
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                  <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+            </div>
+            <div class="card-body">
+
+              <div *ngIf="chartBar" >
+                <canvas id="barra" class="w-100">
+                  {{ chartBar }}
+                </canvas>
+                <input (change)="filterData()" type="date" id="startdate" value="2021-08-25">
+                <input (change)="filterData()" type="date" id="enddate" value="2021-08-31">
+            </div>
+          </div>
+        </div>
         </div>
       </div>
     </section>

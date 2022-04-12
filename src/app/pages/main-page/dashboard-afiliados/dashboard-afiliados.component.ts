@@ -3,6 +3,7 @@ import { DocumentsService } from 'src/app/services/documents.service';
 import { UsersService } from 'src/app/services/users.service';
 import { Chart,DoughnutController, BarController, BarElement, PointElement, LinearScale, Title, CategoryScale, ArcElement, Tooltip,
   LineElement, PolarAreaController, RadialLinearScale, TimeScale, Legend  } from 'node_modules/chart.js';
+import 'chartjs-adapter-date-fns';
 
   import { MatTableDataSource } from '@angular/material/table';
   import { MatPaginator } from '@angular/material/paginator';
@@ -28,6 +29,7 @@ export class DashboardAfiliadosComponent implements OnInit {
 
 
   chart: any =[];
+  chartBar: any = [];
 
   authValidate:boolean = false;
   formSubmitted = false;
@@ -40,6 +42,8 @@ export class DashboardAfiliadosComponent implements OnInit {
 
   documentos = [];
   expandedElement: [] | null;
+
+  public contador = 0;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -69,7 +73,6 @@ export class DashboardAfiliadosComponent implements OnInit {
     //console.log("startDate", this.startDate);
   }
   getDataDocuments(){
-
     this.idAfiliado = localStorage.getItem("id");
     this.documentsService.getData()
     .subscribe((resp?: any) => {
@@ -84,7 +87,17 @@ export class DashboardAfiliadosComponent implements OnInit {
       let nombreDoc = [];
       let path1=[];
       let url1 = [];
-      let contador = 0;
+
+      /*
+       variables para el filtro de fechas
+      */
+      const dateLabels = ['2021-08-25', '2021-08-26', '2021-08-27', '2021-08-28', '2021-08-29', '2021-08-30', '2021-08-31'];
+      const datapoints = [1,2,3,4,5,6,7];
+       /*
+       ===================================
+       ===================================
+       */
+
 
         Object.keys(resp).map( (a, index) => {
           for( var i = 0; i < resp[a].numeroTrabajadoresAfectados.length; i++){
@@ -95,12 +108,10 @@ export class DashboardAfiliadosComponent implements OnInit {
                   dataset1.push([resp[a].category, resp[a].files.length]);
                   for( var j = 0; j < resp[a].files.length; j++){
                     url1.push( resp[a].files[i]['downloadUrl']);
-                    contador ++ ;
-
+                    this.contador ++ ;
                     // nombreDoc.push(resp[a].nombreDocumento);
                     // categorias1.push(resp[a].category);
                     let position = 1;
-
                     this.documentos = Object.keys(resp).map((a, index) =>({
                         position: position++,
                         nombreDocumento: resp[a].nombreDocumento,
@@ -108,10 +119,6 @@ export class DashboardAfiliadosComponent implements OnInit {
                         url: url1[index++],
 
                     }))
-
-
-
-
                     this.dataSource = new MatTableDataSource(this.documentos);
                     this.dataSource.paginator = this.paginator;
                     this.dataSource.sort = this.sort;
@@ -119,13 +126,8 @@ export class DashboardAfiliadosComponent implements OnInit {
                 }
 
               }
-
-
-
-            }
-
-            )
-            console.log(this.documentos);
+        })
+        console.log(this.documentos);
 
 
         resultado = Object.values(dataset1.reduce((c, v) => {
@@ -142,7 +144,6 @@ export class DashboardAfiliadosComponent implements OnInit {
 
 
         for(var k = 0; k < resultado.length; k++){
-
           for(var l = 0; l < resultado[k].length; l++){
             locallabel1.push(resultado[k].splice(l,1));
           }
@@ -177,11 +178,45 @@ export class DashboardAfiliadosComponent implements OnInit {
 
 
             },
+            maintainAspectRatio: false,
 
 
           }
         })
         console.log(this.chart);
+
+        /* Grafico de documentos personalizado por fechas */
+        this.chartBar = new Chart('barra',{
+          type: 'bar',
+          data: {
+            labels: dateLabels,
+            datasets: [
+              {
+                data: datapoints,
+                backgroundColor: [
+                  'rgb(255, 99, 132)',
+                  'rgb(54, 162, 235)',
+                  'rgb(255, 205, 86)'
+                ],
+              }
+            ]
+          },
+          options : {
+            responsive: true,
+            plugins: {
+              legend: {
+                display: true
+              }
+            },
+            scales: {
+              y:{
+                beginAtZero:true
+              }
+            }
+
+
+          }
+        })
 
     })
 
@@ -198,5 +233,5 @@ export class DashboardAfiliadosComponent implements OnInit {
   }
   exportXLSX(){
     this.exporterService.exportToExcel(this.dataSource.data, 'tusdocumentos');
-}
+  }
 }

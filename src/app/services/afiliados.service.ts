@@ -25,4 +25,8 @@ export class AfiliadosService {
   patchData(id:string, data: object){
     return this.http.patch(`${this.api}usuarios/${id}.json`, data);
   }
+  /* Tomar rangos limitados */
+  getLatesData(){
+    return this.http.get(`${ this.api }usuarios.json?orderBy="fecha_incripcion"&limitToLast=5&print=pretty`);
+  }
 }
