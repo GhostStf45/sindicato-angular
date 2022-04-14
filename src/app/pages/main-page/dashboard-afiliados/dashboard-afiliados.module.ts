@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GoogleChartsModule } from 'angular-google-charts';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { FormsModule }   from '@angular/forms';
 //ruta
 import { DashboardAfiliadosComponentRoutingModule } from './dashboard-afiliados-routing.module';
 
@@ -34,6 +35,7 @@ import { environment } from 'src/environments/environment';
     DashboardAfiliadosComponentRoutingModule,
     GoogleChartsModule,
     NgxChartsModule,
+    FormsModule,
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,

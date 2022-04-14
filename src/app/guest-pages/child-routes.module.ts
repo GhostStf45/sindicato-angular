@@ -5,12 +5,12 @@ import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 
-import { InformationmainComponent } from './pages/informationmain/informationmain.component';
 import { AccountComponent } from './pages/account/account.component';
+import { ContactComponent } from './pages/contact/contact.component';
 
 const childRoutes: Routes = [
-  { path: '', component: InformationmainComponent},
   { path: 'account', component: AccountComponent},
+  { path: 'contact', component: ContactComponent}
 ]
 
 @NgModule({

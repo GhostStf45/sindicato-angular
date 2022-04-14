@@ -8,11 +8,17 @@ import { AuthGuard } from '../guards/auth.guard';
 
 
 const routes: Routes = [
+  { path: '', redirectTo: '/main', pathMatch: 'full' },
   {
     path: '',
 	  component: HomeComponent,
 	  loadChildren: () => import('./child-routes.module').then(m => m.ChildRoutesModule),
     canActivate: [AuthGuard]
+  },
+  {
+    path: '',
+    component: HomeComponent,
+    loadChildren: () => import('./public-routes.module').then(m => m.PublicRoutesModule),
   }
 ]
 

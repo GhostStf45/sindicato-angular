@@ -12,6 +12,21 @@ import { functions } from 'src/app/helpers/functions';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {ExporterService } from '../../../services/exporter.service';
 
+/* Librerias para la seccion de mensajes */
+import {HttpClient} from "@angular/common/http";
+import { NgForm } from '@angular/forms';
+import { Email } from '../../../config';
+import { MessageModel } from 'src/app/models/message.model';
+import { MessagesService } from '../../../services/messages.service';
+import { Subject } from 'rxjs';
+
+
+import Swal from 'sweetalert2';
+
+declare var jQuery:any;
+declare var $:any;
+
+
 
 @Component({
   selector: 'app-dashboard-afiliados',
@@ -55,8 +70,34 @@ export class DashboardAfiliadosComponent implements OnInit {
   startDate =  new Date(new Date().getFullYear(),0,1);
   endDate = new Date();
 
-  constructor(private documentsService: DocumentsService, private usersService: UsersService, private exporterService: ExporterService) {
-    Chart.register(DoughnutController,BarController, BarElement, PointElement, LinearScale, Title, CategoryScale, ArcElement, Tooltip,LineElement, PolarAreaController, RadialLinearScale, TimeScale, Legend  );
+
+
+  /*
+    Variables para el listado de mensajes
+
+
+  */
+
+    messages:any[] = [];
+    idMessage:any[] = [];
+    message: MessageModel;
+    uniqueIdMessage:string;
+    userMessage:any[] = [];
+    email:string = Email.url;
+
+
+  /*======================================= */
+
+  constructor(private documentsService: DocumentsService,
+    private usersService: UsersService,
+    private exporterService: ExporterService,
+    private messagesService: MessagesService,
+    private http: HttpClient) {
+    Chart.register(DoughnutController,BarController, BarElement,
+      PointElement, LinearScale, Title, CategoryScale,
+      ArcElement, Tooltip,LineElement, PolarAreaController,
+      RadialLinearScale, TimeScale, Legend  );
+    this.message = new MessageModel();
    }
 
   ngOnInit(): void {
@@ -69,6 +110,29 @@ export class DashboardAfiliadosComponent implements OnInit {
       this.displayedColumns.splice(3,0,'url')
 
     }
+
+    let load= 0;
+
+    /* Preguntamos si el dirigente tiene mensajes */
+    this.messagesService.getFilterData("dirigente", localStorage.getItem("displayName"))
+        .subscribe( resp => {
+          if(Object.keys(resp).length > 0){
+            for(const i in resp){
+              load++;
+              this.messages.push(resp[i]);
+              this.idMessage.push(i);
+              /* Traemos el usuario del mensaje*/
+              this.usersService.getFilterData("email", resp[i].email)
+                .subscribe( resp => {
+                  if(Object.keys(resp).length > 0){
+                    for (const i in resp){
+                      this.userMessage.push(resp[i]);
+                    }
+                  }
+                })
+            }
+          }
+        })
 
     //console.log("startDate", this.startDate);
   }
@@ -233,5 +297,40 @@ export class DashboardAfiliadosComponent implements OnInit {
   }
   exportXLSX(){
     this.exporterService.exportToExcel(this.dataSource.data, 'tusdocumentos');
+  }
+  /* ==========================RESPONDER MENSAJE  ========================== */
+  answerMessage(idMessage){
+    this.uniqueIdMessage = idMessage;
+    $("#answerMessage").modal();
+  }
+  onSubmit(f: NgForm){
+    if(f.invalid){
+      Swal.fire("Error", "Peticion invalida", "error");
+      return;
+    }
+
+    let body = {
+      date_answer: new Date(),
+      answer: this.message.answer
+    }
+    this.messagesService.patchDataAuth(this.uniqueIdMessage, body, localStorage.getItem("idToken")).subscribe( resp => {
+      if(resp["email"] != ""){
+        const formData = new FormData();
+        formData.append('email', 'yes');
+        formData.append('comment', "Has recibido un actualizacion en tu mensaje al dirigente");
+        formData.append('address', this.userMessage[0].email);
+        formData.append('name', this.userMessage[0].displayName);
+        formData.append('url', 'localhost');
+
+        this.http.post( this.email, formData)
+            .subscribe( resp1 => {
+              if(resp1["status"] == 200){
+                Swal.fire("Ok", "El mensaje ha sido respondido", "success");
+              }
+            })
+      }
+    }, err => {
+      Swal.fire("error", err.error.error.message, "error");
+    })
   }
 }

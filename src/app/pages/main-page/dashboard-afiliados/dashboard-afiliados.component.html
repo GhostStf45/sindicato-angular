@@ -202,10 +202,116 @@
           </div>
         </div>
         </div>
+        <div class="col-md-6 col-sm-12">
+          <div class="card">
+            <div class="card-header border-transparent">
+                <h3 class="card-title">Mensajes</h3>
+                <div class="table-responsive">
+                  <table class="table m-0">
+                    <thead>
+                      <tr>
+                        <th>Mensaje Id</th>
+                        <th>Fecha de mensaje</th>
+                        <th>Nombre completo (Emisor)</th>
+                        <th>Tipo de integrante (Emisor)</th>
+                        <th>Nombre completo del receptor</th>
+                        <th>Mensaje</th>
+                        <th>Fecha de respuesta</th>
+                        <th>Respuesta</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let message of messages; let i = index;">
+                        <td>
+                          {{ idMessage[i]}}
+                          <div class="text-center" *ngIf="message.answer == null">
+                              <button type="button" class="btn btn-danger mt-2" (click)="answerMessage(idMessage[i])">Responder mensaje</button>
+                          </div>
+                        </td>
+                        <td>
+                          {{ message.date_message | date }}
+                        </td>
+                        <td>
+                          {{ message.nombres }} {{ message.apellidos }}
+                        </td>
+                        <td>
+                          {{ message.tipo }}
+                        </td>
+                        <td>
+                          {{ message.dirigente}}
+                        </td>
+                        <td>
+                          {{ message.message}}
+                        </td>
+                        <td>
+                          {{ message.date_answer | date}}
+                        </td>
+                        <td>
+                          {{ message.answer}}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+            </div>
+          </div>
+        </div>
       </div>
+      	<!--=====================================
+	Modal para las mensajes
+	======================================-->
+
+	<!-- The Modal -->
+	<div class="modal" id="answerMessage">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <form
+            (ngSubmit)="onSubmit(f)"
+            #f="ngForm">
+
+                <div class="modal-header">
+                    <h4 class="modal-title">Responder mensaje.</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="form-group">
+
+                        <label>Escribe tu respuesta</label>
+
+                        <div class="form-group__content">
+
+                            <textarea
+                            class="form-control"
+                            type="text"
+                            name="answer"
+                            [(ngModel)]="message.answer"
+                            required></textarea>
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+
+                    <div class="float-right">
+                        <button type="submit" class="btn btn-warning btn-lg">Send</button>
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
     </section>
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
+
 
 

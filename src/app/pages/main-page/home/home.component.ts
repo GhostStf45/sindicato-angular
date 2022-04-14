@@ -198,8 +198,8 @@ export class HomeComponent implements OnInit {
 
               if(resp[a]['files'] != undefined){
                 for(var i=0; i<resp[a]['files'].length; i++){
-                  contador ++;
                   dataset.push([resp[a]['category'], resp[a]['files'].length]);
+                  contador ++;
                 }
 
               }
@@ -224,13 +224,14 @@ export class HomeComponent implements OnInit {
             return c;
           }, {}));
 
+          console.log(resultado);
+
           for(var k = 0; k < resultado.length; k++){
             for(var l = 0; l < resultado[k].length; l++){
               arrayCategory.push(resultado[k].splice(l,1));
             }
             arrayFiles.push(resultado[k]);
           }
-          console.log(arrayFiles);
 
 
           this.chart = new Chart('barra',{

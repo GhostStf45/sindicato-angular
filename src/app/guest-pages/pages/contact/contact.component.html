@@ -1,0 +1,67 @@
+<div class="container">
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1>Contact us</h1>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="content">
+    <div class="card">
+      <div class="card-body row">
+        <div
+          class="col-5 text-center d-flex align-items-center justify-content-center"
+        >
+          <div class="">
+            <h2>Admin<strong>LTE</strong></h2>
+            <p class="lead mb-5">
+              123 Testing Ave, Testtown, 9876 NA<br />
+              Phone: +1 234 56789012
+            </p>
+          </div>
+        </div>
+        <div class="col-7">
+          <div class="form-group">
+            <label for="inputName">Nombres</label>
+            <input type="text" id="inputName" class="form-control" [disabled]="isDisabled" value="{{ nombres_ }}" />
+          </div>
+          <div class="form-group">
+            <label for="inputName">Apellidos</label>
+            <input type="text" id="inputName" class="form-control" [disabled]="isDisabled"  value="{{ apellidos_ }}" />
+          </div>
+          <div class="form-group">
+            <label for="inputName">Tipo de participante</label>
+            <input type="text" id="inputName" class="form-control" [disabled]="isDisabled"  value="{{ tipo_ }}" />
+          </div>
+          <div class="form-group">
+            <label for="inputEmail">E-Mail</label>
+            <input type="email" id="inputEmail" class="form-control" [disabled]="isDisabled"  value="{{ email_ }}"/>
+          </div>
+          <div class="form-group">
+            <label for="inputEmail">Dirigente</label>
+            <select class="form-control" #dirigente>
+              <option value="">Seleccione el dirigente que quiere contactar</option>
+              <option *ngFor="let dirigente of dirigentes" value="{{dirigente.id }}" >{{ dirigente.nombres}}<span>-{{dirigente.departamento}}</span><span>-</span>{{ dirigente.email }}</option>
+
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="inputMessage" >Mensaje</label>
+            <textarea
+              id="inputMessage"
+              class="form-control"
+              rows="4"
+              #message
+            ></textarea>
+          </div>
+          <div class="form-group">
+            <span class="btn btn-primary" (click)="newQuestion(message, dirigente )">Enviar mensaje</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+
 //componentes
 import { DashboardAfiliadosComponent } from './dashboard-afiliados.component';
 

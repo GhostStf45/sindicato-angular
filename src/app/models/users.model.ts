@@ -7,6 +7,9 @@ export class UsersModel{
     displayName:string;
     estado:string = 'En espera';
     area_laboral:string = 'Ninguno';
+    departamento:string;
+    provincia:string;
+    distrito: string;
     dni:string;
     telefono?:string;
     tipo:string = 'Invitado';

@@ -36,15 +36,15 @@ if(isset($_GET["key"]) && $_GET["key"] == "AIzaSyACGsYD_RQ62dON-rMJhfNhHFEa355eV
 
 			<div>
 
-				Hi, '.$_POST["name"].':
+				Hola, '.$_POST["name"].':
 
 				<a href="'.$_POST["url"].'">Click this link for more information</a>
 
-				If you didn’t ask to verify this address, you can ignore this email.
+				Ha recibido una actualizacion de su perfil o ha recibido un mensaje nuevo
 
-				Thanks,
+				Gracias,
 
-				Your marketplace team
+				Sindicato Unitario de Trabajadores de Saga Falabella
 
 			</div>
 

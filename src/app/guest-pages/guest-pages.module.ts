@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 import { GuestPagesRoutingModule } from './guest-pages-routing.module';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireStorageModule  } from '@angular/fire/storage';
 
 import { SharedModule } from './pages/shared/shared.module';
 import { HomeComponent } from './pages/home.component';
@@ -12,10 +14,13 @@ import { InformationmainComponent } from './pages/informationmain/informationmai
 
 //Rutas
 import { RouterModule } from '@angular/router';
+import { ContactComponent } from './pages/contact/contact.component';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
     HomeComponent,
+    ContactComponent,
   ],
   imports: [
     CommonModule,
@@ -24,7 +29,10 @@ import { RouterModule } from '@angular/router';
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
-    SharedModule
+    SharedModule,
+    AngularFireModule,
+    AngularFireStorageModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig)
 
   ]
 })
