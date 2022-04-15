@@ -116,6 +116,7 @@
           </div>
           <div class="input-group mb-3">
             <select name="selectDepartamento" onchange="cambia()" class="form-control" required="" [(ngModel)]="user.departamento">
+              <option disabled selected value="undefined">Seleccione el departamento</option>
               <option value="Amazonas">Amazonas</option>
               <option value="Ancash">Ancash</option>
               <option value="Apurímac">Apurímac</option>
@@ -150,7 +151,7 @@
           </div>
           <div class="input-group mb-3">
               <select class="form-control" name="selectProvincia" onchange="cambiaDistrito()" required="" [(ngModel)]="user.provincia">
-                <option>Seleccione la Provincia</option>
+                <option disabled selected value="undefined">Seleccione la Provincia</option>
               </select>
               <div class="input-group-append">
                 <div class="input-group-text">
@@ -159,7 +160,7 @@
             </div>
           </div>
           <div class="input-group mb-3">
-              <select class="form-control" name="selectDistrito" required="" [(ngModel)]="user.distrito"><option>Seleccione el Distrito</option>
+              <select class="form-control" name="selectDistrito" required="" [(ngModel)]="user.distrito"><option disabled selected value="undefined">Seleccione el Distrito</option>
               </select>
               <div class="input-group-append">
                 <div class="input-group-text">
