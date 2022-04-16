@@ -197,8 +197,8 @@ export class HomeComponent implements OnInit {
           Object.keys(resp).map( (a, index) => {
 
               if(resp[a]['files'] != undefined){
+                dataset.push([resp[a]['category'], resp[a]['files'].length]);
                 for(var i=0; i<resp[a]['files'].length; i++){
-                  dataset.push([resp[a]['category'], resp[a]['files'].length]);
                   contador ++;
                 }
 
