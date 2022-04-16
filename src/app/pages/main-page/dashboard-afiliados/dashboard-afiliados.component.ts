@@ -183,7 +183,7 @@ export class DashboardAfiliadosComponent implements OnInit {
                         position: position++,
                         nombreDocumento: resp[a].nombreDocumento,
                         category: resp[a].category,
-                        url: url1[index++],
+                        url: url1[i]['downloadUrl'],
 
                     }))
                     this.dataSource = new MatTableDataSource(this.documentos);
