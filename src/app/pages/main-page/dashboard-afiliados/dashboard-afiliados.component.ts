@@ -55,6 +55,8 @@ export class DashboardAfiliadosComponent implements OnInit {
   dataSource!: MatTableDataSource<any>;
   screenSizeSM = false;
 
+  tipo: string = "";
+
   documentos = [];
   expandedElement: [] | null;
 
@@ -110,6 +112,7 @@ export class DashboardAfiliadosComponent implements OnInit {
       this.displayedColumns.splice(3,0,'url')
 
     }
+    this.tipo = localStorage.getItem('tipo');
 
     let load= 0;
 
@@ -171,7 +174,7 @@ export class DashboardAfiliadosComponent implements OnInit {
                   dataset_ = [resp[a].category, resp[a].files.length];
                   dataset1.push([resp[a].category, resp[a].files.length]);
                   for( var j = 0; j < resp[a].files.length; j++){
-                    url1.push( resp[a].files[i]['downloadUrl']);
+                   url1.push( resp[a].files[i]);
                     this.contador ++ ;
                     // nombreDoc.push(resp[a].nombreDocumento);
                     // categorias1.push(resp[a].category);

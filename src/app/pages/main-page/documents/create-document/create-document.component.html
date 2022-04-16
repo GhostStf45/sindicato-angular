@@ -131,7 +131,7 @@
           </ng-container>
           <ng-container>
             <div class="form-group">
-              <label for="InputDetalles">Detalles de la denuncia (Opcional)</label>
+              <label for="InputDetalles">Detalles de la denuncia</label>
               <textarea class="form-control" rows="3" id="InputDetalles"
               formControlName="detalles"
               ></textarea>
@@ -144,12 +144,12 @@
         </div>
         <div class="card-footer">
           <button mat-dialog-close class="btn btn-secondary">Cerrar</button>
-          <button type="submit" class="btn btn-warning float-right">Guardar</button>
+          <button type="submit" class="btn btn-warning float-right" [disabled]="f.invalid || numberFiles <= 0">Guardar</button>
         </div>
     </form>
 
     </div>
-    <div class="card card-warning col-md-6">
+    <div class="card card-warning col-md-6" *ngIf="!f.invalid">
       <div class="card-header">Subir documentos</div>
       <div class="card-body">
         <ng-container>

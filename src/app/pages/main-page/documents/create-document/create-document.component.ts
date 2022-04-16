@@ -75,6 +75,7 @@ export class CreateDocumentComponent implements OnInit{
 
 
   */
+ public numberFiles:number = 0;
 
   public f = this.form.group({
     /* Denunciante */
@@ -92,7 +93,7 @@ export class CreateDocumentComponent implements OnInit{
     actividad: ['', [Validators.required]],
     numeroTrabajadoresAfectados: ['', [Validators.required]],
     lugarEmpresa:['', [Validators.required]],
-    detalles:['']
+    detalles:['', [Validators.required]]
   });
 
   get category(){ return this.f.controls.category}
@@ -211,6 +212,8 @@ export class CreateDocumentComponent implements OnInit{
            }
          )
 
+
+
   }
   /* Funcion save document */
   saveDocument(){
@@ -221,6 +224,7 @@ export class CreateDocumentComponent implements OnInit{
     if(this.f.invalid){
       return;
     }
+    console.log(this.f);
     const dataDocuments: Idocumentos = {
       category:this.f.controls.category.value,
       nombreDirigente:this.f.controls.nombreDirigente.value,
@@ -283,8 +287,8 @@ toggleHover(event:boolean){
 onDrop(files: FileList){
   for(let i = 0; i< files.length; i++){
     this.files.push(files.item(i));
-    console.log(files);
   }
+  this.numberFiles = this.files.length;
 }
 
 /* */
