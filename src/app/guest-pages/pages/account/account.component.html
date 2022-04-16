@@ -109,16 +109,27 @@
                     </div>
 
                     <div class="form-group row">
-                      <label for="inputName" class="col-sm-2 col-form-label">DNI</label>
+                      <label for="dni_" class="col-sm-2 col-form-label">DNI</label>
                       <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inputName" placeholder="DNI" formControlName="dni" value="{{dni_}}">
+                        <input type="text" class="form-control" id="dni_" placeholder="DNI" formControlName="dni" value="{{dni_}}" [ngClass]="{'is-invalid': invalidField('dni')}" maxlength="8">
+                        <span class="invalid-feedback" *ngIf=" dni_.errors?.required">
+                          Inserte el DNI.
+                        </span>
+                        <span class="invalid-feedback" *ngIf="dni_.invalid && dni_.errors?.exist">
+                          No existe este DNI en RENIEC, inserte un DNI valido.
+                        </span>
+                        <span class="invalid-feedback" *ngIf="dni_.invalid && dni_.errors?.pattern">
+                          Solo se aceptan datos numericos del 0 al 9 y la longitud debe de ser no menor a 8 digitos
+                        </span>
                       </div>
                     </div>
                     <div class="form-group row">
                       <label for="" class="col-sm-2 col-form-label">Departamento</label>
 
                       <div class="col-sm-10">
-                        <select name="selectDepartamento" onchange="cambia()" class="form-control" required="" formControlName="departamento">
+                        <select name="selectDepartamento" onchange="cambia()" class="form-control" formControlName="departamento" [value]="departamento_" >
+                          <option>Seleccione el departamento</option>
+                          <option [ngValue]="departamento_">{{ departamento_ }}</option>
                           <option value="Amazonas">Amazonas</option>
                           <option value="Ancash">Ancash</option>
                           <option value="Apurímac">Apurímac</option>
@@ -145,31 +156,24 @@
                           <option value="Tumbes">Tumbes</option>
                           <option value="Ucayali">Ucayali</option>
                           </select>
-                          <span>
-                            Su departamento actual: {{ departamento_ }}
-                          </span>
                       </div>
                     </div>
                     <div class="form-group row">
                       <label for="" class="col-sm-2 col-form-label">Provincia</label>
                       <div class="col-sm-10">
-                        <select class="form-control" name="selectProvincia" onchange="cambiaDistrito()" required=""  formControlName="provincia">
+                        <select class="form-control" name="selectProvincia" onchange="cambiaDistrito()" required=""  formControlName="provincia" [value]="provincia_">
                           <option>Seleccione la Provincia</option>
+                          <option [ngValue]="provincia_">{{ provincia_ }}</option>
                         </select>
-                        <span>
-                          Su provincia actual: {{ provincia_ }}
-                        </span>
                       </div>
                     </div>
                     <div class="form-group row">
                       <label for="" class="col-sm-2 col-form-label">Distrito</label>
 
                       <div class="col-sm-10">
-                        <select class="form-control" name="selectDistrito" required="" formControlName="distrito"><option>Seleccione el Distrito</option>
+                        <select class="form-control" name="selectDistrito" required="" formControlName="distrito" [value]="distrito_"><option>Seleccione el Distrito</option>
+                          <option [ngValue]="distrito_">{{ distrito_ }}</option>
                         </select>
-                        <span>
-                          Su distrito actual: {{ distrito_ }}
-                        </span>
                       </div>
                     </div>
                     <div class="form-group row">

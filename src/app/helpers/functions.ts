@@ -16,7 +16,7 @@ export class functions {
 	static invalidField(field:string, f:FormGroup, formSubmitted:boolean):boolean{
 
 		if(formSubmitted && f.controls[field].invalid){
-
+      console.log(f.controls[field]);
 		   	return true;
 
 		}else{

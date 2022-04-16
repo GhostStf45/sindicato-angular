@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { UsersService } from 'src/app/services/users.service';
-import { FormBuilder, Validators} from '@angular/forms';
+import { AbstractControl, FormBuilder, ValidationErrors, Validators} from '@angular/forms';
 import { Iafiliados } from 'src/app/interfaces/Iafiliados';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AfiliadosService } from '../../../services/afiliados.service';
 
 import Swal from 'sweetalert2';
+import { functions } from 'src/app/helpers/functions';
+import { Observable } from 'rxjs';
 
 declare var jQuery:any;
 declare var $:any;
@@ -20,12 +22,17 @@ declare var $:any;
 export class AccountComponent implements OnInit {
 
 
+
   public f = this.form.group({
     nombres:['', { validators: [Validators.required, Validators.maxLength(50), Validators.pattern(/[.\\,\\0-9a-zA-ZáéíóúñÁÉÍÓÚÑ]{1,50}/) ]}],
     apellidos: ['', { validators: [Validators.required, Validators.maxLength(50), Validators.pattern(/[.\\,\\0-9a-zA-ZáéíóúñÁÉÍÓÚÑ]{1,50}/)]}],
     telefono: ['', { validators: [Validators.required, Validators.maxLength(9), Validators.pattern(/[.\\,\\0-9]{0,9}/)]}],
     area_laboral_: ['', { validators: [Validators.required, Validators.maxLength(50), Validators.pattern(/[.\\,\\a-zA-ZáéíóúñÁÉÍÓÚÑ]{1,50}/)]}],
-    dni: ['', { validators: [Validators.required, Validators.maxLength(8), Validators.pattern(/[.\\,\\0-9]{0,9}/)]}],
+    dni: ['', {
+        validators: [Validators.required, Validators.minLength(8), Validators.maxLength(8), Validators.pattern(/[0-9]/)],
+        asyncValidators:[this.existDNI()],
+        updateOn:'blur'
+    }],
     departamento: ['', { validators: [Validators.required]}],
     provincia: ['', { validators: [Validators.required]}],
     distrito: ['', { validators: [Validators.required]}],
@@ -42,7 +49,6 @@ export class AccountComponent implements OnInit {
 
   idAfiliado = "";
 
-
   displayName:string = "";
   tipo: string = "";
   estado: string = "";
@@ -51,6 +57,7 @@ export class AccountComponent implements OnInit {
   provincia_:string = "";
   distrito_:string = "";
   avenida_: string = "";
+
 
 
 
@@ -65,9 +72,18 @@ export class AccountComponent implements OnInit {
   get avenida(){ return this.f.controls.avenida}
 
 
-  constructor(private activatedRoute: ActivatedRoute,private usersService: UsersService, private form: FormBuilder, private router: Router, private afiliadosService: AfiliadosService) { }
+  constructor(private activatedRoute: ActivatedRoute,
+    private usersService: UsersService,
+    private form: FormBuilder,
+    private router: Router,
+    private afiliadosService: AfiliadosService) {
+
+
+
+  }
 
   ngOnInit(): void {
+
       /* validar si existe el usuario autenticado */
       this.usersService.authActivate().then( resp => {
         if(resp){
@@ -86,6 +102,10 @@ export class AccountComponent implements OnInit {
                     this.provincia_ = resp[i].provincia;
                     this.distrito_ = resp[i].distrito;
                     this.avenida_ = resp[i].avenida;
+
+                    this.f.controls['departamento'].setValue(this.departamento_	, {onlySelf: true});
+                    this.f.controls['provincia'].setValue(this.provincia_	, {onlySelf: true});
+                    this.f.controls['distrito'].setValue(this.distrito_	, {onlySelf: true});
 
                   if(resp[i].displayName != ""){
                     this.displayName = resp[i].displayName;
@@ -113,6 +133,7 @@ export class AccountComponent implements OnInit {
   // Validacion de expresion regular del formulario para
   validate(input){
     let pattern;
+
     if($(input).attr("name") == "password"){
       pattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,}$/;
     }
@@ -185,8 +206,6 @@ export class AccountComponent implements OnInit {
       return;
     }
     this.loadData = true;
-
-
     this.usersService.getFilterData("idToken", localStorage.getItem("idToken"))
               .subscribe( resp => {
                 for( const i in resp){
@@ -204,6 +223,8 @@ export class AccountComponent implements OnInit {
                       avenida: this.f.controls.avenida.value,
 
                     }
+                    console.log(this.f.controls.departamento.value);
+                    console.log(this.f.controls.nombres.value);
                     /* Guardar en la base de datos la info del producto */
                     this.afiliadosService.patchData(this.idAfiliado, dataAfiliado).subscribe(
                       resp => {
@@ -221,6 +242,47 @@ export class AccountComponent implements OnInit {
 
 
   }
+  invalidField(field:string){
+    return functions.invalidField(field, this.f, this.formSubmitted);
+  }
+  existDNI(){
+    return( control: AbstractControl) => {
+       const name = control.value;
+       return new Promise((resolve)=> {
+         this.usersService.ConsultaReniecFnc(name)
+             .subscribe(
+               resp => {
+
+                 if(resp["message"] === "No se encontraron resultadoss."){
+                   resolve({exist: true });
+
+                 }
+
+               }
+             )
+       })
+     }
+  }
+  existDNIinDatabase() {
+   return ( control: AbstractControl)  => {
+      const name = control.value;
+      return new Promise((resolve)=> {
+       this.usersService.getFilterData("dni", name)
+            .subscribe(
+              resp => {
+
+                if(Object.keys(resp).length > 0){
+                  resolve({existDNI: true });
+
+                }
+
+
+              }
+            )
+      })
+    }
+ }
+
 
 
 }
