@@ -92,7 +92,7 @@ h1, h2, h3, h4, h5, h6, .font-primary {
   margin-left: 15px;
 }
 #topbar .social-links a {
-  color: #5c768d;
+  color: #ca3838;
   padding: 4px 12px;
   display: inline-block;
   line-height: 1px;
@@ -554,11 +554,11 @@ section {
   transition: 0.5s;
 }
 .about .icon-box .icon i {
-  color: #428bca;
+  color: #d13c32;
   font-size: 32px;
 }
 .about .icon-box:hover .icon {
-  background: #428bca;
+  background: #d13c32;
 }
 .about .icon-box:hover .icon i {
   color: #fff;
@@ -575,7 +575,7 @@ section {
   transition: 0.3s;
 }
 .about .icon-box .title a:hover {
-  color: #428bca;
+  color: #d13c32;
 }
 .about .icon-box .description {
   margin-left: 95px;
@@ -735,7 +735,7 @@ section {
   font-size: 42px;
   display: block;
   font-weight: 700;
-  color: #1c5c93;
+  color: #c53333;
 }
 .counts .count-box p {
   padding: 0;
@@ -1198,8 +1198,8 @@ section {
 #footer .footer-top .social-links a {
   font-size: 18px;
   display: inline-block;
-  background: #768fa6;
-  color: #fff;
+  background: #ffffff !important;
+  color: rgb(236, 57, 57) !important;
   line-height: 1;
   padding: 8px 0;
   margin-right: 4px;

@@ -15,14 +15,6 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { functions } from 'src/app/helpers/functions';
 
-
-/*
-TODO: AÑADIR LA SECCION DE MODIFICACION DE DOCUMENTOS
-
-
-*/
-
-
 @Component({
   selector: 'app-documents',
   templateUrl: './documents.component.html',
