@@ -197,6 +197,7 @@ export class AccountComponent implements OnInit {
     localStorage.removeItem("dni");
     localStorage.removeItem("fecha_inscripcion");
     localStorage.removeItem("id");
+    localStorage.removeItem("estado");
     window.open('login', "_top");
   }
 

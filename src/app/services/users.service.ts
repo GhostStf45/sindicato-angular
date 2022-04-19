@@ -33,6 +33,7 @@ export class UsersService {
 
 
   public tipoService:string = "";
+  public estadoService:string = "";
 
 
 
@@ -138,6 +139,10 @@ export class UsersService {
   get role(){
     this.tipoService = localStorage.getItem('tipo');
     return this.tipoService;
+  }
+  get estado(){
+    this.estadoService = localStorage.getItem('estado');
+    return this.estadoService;
   }
 
 }

@@ -52,6 +52,7 @@ export class HeaderComponent implements OnInit {
     localStorage.removeItem("displayName");
     localStorage.removeItem("dni");
     localStorage.removeItem("fecha_inscripcion");
+    localStorage.removeItem("estado");
     window.open('login', "_top");
   }
 

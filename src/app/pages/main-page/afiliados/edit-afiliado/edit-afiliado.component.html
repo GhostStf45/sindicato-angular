@@ -136,8 +136,11 @@
                   <option value="{{ tipo.value }}">{{ tipo.value }}</option>
                   <option *ngIf="tipo.value == 'Invitado'" value="Afiliado">Afiliado</option>
                   <option *ngIf="tipo.value == 'Invitado'" value="Dirigente">Dirigente</option>
+                  <option *ngIf="tipo.value == 'Invitado'" value="Abogado">Abogado</option>
                   <option *ngIf="tipo.value == 'Afiliado'" value="Dirigente">Dirigente</option>
+                  <option *ngIf="tipo.value == 'Afiliado'" value="Abogado">Abogado</option>
                   <option *ngIf="tipo.value == 'Dirigente'" value="Afiliado">Afiliado</option>
+                  <option *ngIf="tipo.value == 'Dirigente'" value="Abogado">Abogado</option>
 
               </select>
 

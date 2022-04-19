@@ -72,6 +72,7 @@ export class HomeComponent implements OnInit {
                 localStorage.setItem("displayName", resp[i].displayName);
                 localStorage.setItem("dni", resp[i].dni);
                 localStorage.setItem("fecha_inscripcion", resp[i].fecha_incripcion);
+                localStorage.setItem("estado", resp[i].estado);
                 localStorage.setItem("id", id);
 
 
@@ -89,6 +90,7 @@ export class HomeComponent implements OnInit {
     localStorage.removeItem("displayName");
     localStorage.removeItem("dni");
     localStorage.removeItem("fecha_inscripcion");
+    localStorage.removeItem("estado");
     window.open('login', "_top");
   }
 
