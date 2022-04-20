@@ -93,7 +93,7 @@ export class LoginComponent implements OnInit {
       let body  = {
         oobCode: this.activatedRoute.snapshot.queryParams["oobCode"]
       }
-      this.usersService.confirmEmailVerificationFnc(body)
+      this.usersService.VerifyPasswordResetCodeFnc(body)
          .subscribe( resp => {
             if(resp["requestType"] == "PASSWORD_RESET"){
                 $("#newPassword").modal();
