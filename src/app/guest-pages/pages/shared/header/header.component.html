@@ -3,7 +3,7 @@
     <div class="container d-flex align-items-center">
 
       <div class="logo me-auto">
-        <h1><a href="index.html">SUTRASAF</a></h1>
+        <h1><a [routerLink]="['/main']">SUTRASAF</a></h1>
         <!-- Uncomment below if you prefer to use an image logo -->
         <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
@@ -24,12 +24,13 @@
       </div>
       <!-- ======= Ir a la cuenta ======= -->
       <div class="ml-auto" *ngIf="authValidate">
-        <nav id="navbar" class="navbar">
+        <nav id="navbar" class="navbar navbar1">
           <ul>
             <li class="dropdown"><a href="#" [innerHTML]="displayName"></a>
               <ul>
                 <li *ngIf="tipo == 'Afiliado'"><a [routerLink]="['/panel']">Panel Administrativo</a></li>
                 <li *ngIf="tipo == 'Dirigente'"><a [routerLink]="['/panel']">Panel Administrativo</a></li>
+                <li *ngIf="tipo == 'Abogado'"><a [routerLink]="['/panel']">Panel Administrativo</a></li>
                 <li><a [routerLink]="['/account']">Configuración</a></li>
                 <li><a role="button" (click)="logout()">Cerrar Sesión</a></li>
 
@@ -39,9 +40,12 @@
               <h5 *ngIf="tipo != ''"><span class="badge bg-danger text-capitalize">{{ tipo }}</span></h5>
             </div>
           </ul>
+          <i class="bi mobile-nav-toggle bi-list"></i>
 
         </nav>
+
       </div>
+
 
     </div>
   </header><!-- End Header -->

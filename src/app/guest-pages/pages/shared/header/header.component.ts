@@ -28,7 +28,7 @@ export class HeaderComponent implements OnInit {
                 if(resp[i].displayName != ""){
                   this.displayName = `<span class="font-weight-bold">${resp[i].displayName} | Mi cuenta </span><i class="fas fa-angle-down ml-2"></i>`;
                 }
-                if(resp[i].tipo == "Dirigente" || resp[i].tipo == "Afiliado" ){
+                if(resp[i].tipo == "Dirigente" || resp[i].tipo == "Afiliado" || resp[i].tipo == "Abogado" ){
                   this.tipo = resp[i].tipo;
                 }else{
                   this.tipo = "Invitado";

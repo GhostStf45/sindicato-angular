@@ -17,11 +17,6 @@ declare var jQuery:any;
 declare var $:any;
 
 
-/*
-  TODO: VALIDAR FRONTEND => BOTON DE GUARDADO (DIV DINAMICO) Y SECCION DE SUBIR DOCUMENTOS (DIV DINAMICO)
-
-
-*/
 
 
 export interface Departamentos{
@@ -84,7 +79,7 @@ export class CreateDocumentComponent implements OnInit{
     nombreDirigente: ['', [Validators.required]],
     nombreDocumento: ['', {
         validators: [Validators.required],
-        asyncValidators:[],
+        asyncValidators:[this.isRepeatDocument()],
         updateOn:'blur'
     }],
     fechaDenuncia: ['', [Validators.required]],
@@ -263,8 +258,6 @@ export class CreateDocumentComponent implements OnInit{
 
                 if(Object.keys(resp).length > 0){
                   resolve({document: true });
-                }else{
-                  resolve({document: false });
                 }
 
               }

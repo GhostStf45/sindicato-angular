@@ -75,8 +75,6 @@ export class CreateCategoryDocumentComponent implements OnInit {
 
                 if(Object.keys(resp).length > 0){
                   resolve({category: true });
-                }else{
-                  resolve({category: false });
                 }
 
               }

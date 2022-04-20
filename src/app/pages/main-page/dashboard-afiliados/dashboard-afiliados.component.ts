@@ -19,6 +19,7 @@ import { Email } from '../../../config';
 import { MessageModel } from 'src/app/models/message.model';
 import { MessagesService } from '../../../services/messages.service';
 import { Subject } from 'rxjs';
+import * as moment from 'moment';
 
 
 import Swal from 'sweetalert2';
@@ -62,6 +63,16 @@ export class DashboardAfiliadosComponent implements OnInit {
 
   public contador = 0;
 
+
+  /* Fechas */
+  dataDates: any[] = [];
+  dataDatesCount: any[] = [];
+
+  /*
+
+
+  */
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -69,8 +80,8 @@ export class DashboardAfiliadosComponent implements OnInit {
 
   /* Rangos de fechas */
 
-  startDate =  new Date(new Date().getFullYear(),0,1);
-  endDate = new Date();
+  startDate:any;
+  endDate:any;
 
 
 
@@ -136,6 +147,7 @@ export class DashboardAfiliadosComponent implements OnInit {
             }
           }
         })
+    this.getDataDocumentsByDate();
 
     //console.log("startDate", this.startDate);
   }
@@ -148,6 +160,7 @@ export class DashboardAfiliadosComponent implements OnInit {
       var dataset_ = []
       var dataset1 = [];
       let resultado;
+      let resultadoDates;
       let resultado1 =[];
       let locallabel1 = [];
 
@@ -155,15 +168,6 @@ export class DashboardAfiliadosComponent implements OnInit {
       let path1=[];
       let url1 = [];
 
-      /*
-       variables para el filtro de fechas
-      */
-      const dateLabels = ['2021-08-25', '2021-08-26', '2021-08-27', '2021-08-28', '2021-08-29', '2021-08-30', '2021-08-31'];
-      const datapoints = [1,2,3,4,5,6,7];
-       /*
-       ===================================
-       ===================================
-       */
 
 
         Object.keys(resp).map( (a, index) => {
@@ -194,9 +198,6 @@ export class DashboardAfiliadosComponent implements OnInit {
 
               }
         })
-        console.log(this.documentos);
-
-
         resultado = Object.values(dataset1.reduce((c, v) => {
           if (c[v[0]])
           {
@@ -209,15 +210,12 @@ export class DashboardAfiliadosComponent implements OnInit {
           return c;
         }, {}));
 
-
         for(var k = 0; k < resultado.length; k++){
           for(var l = 0; l < resultado[k].length; l++){
             locallabel1.push(resultado[k].splice(l,1));
           }
           resultado1.push(resultado[k]);
         }
-
-        //this.documentos = [...this.documentos];
 
         this.chart = new Chart('canvas',{
           type: 'doughnut',
@@ -250,16 +248,62 @@ export class DashboardAfiliadosComponent implements OnInit {
 
           }
         })
-        console.log(this.chart);
+    })
 
-        /* Grafico de documentos personalizado por fechas */
+  }
+  getDataDocumentsByDate(){
+    this.idAfiliado = localStorage.getItem("id");
+    this.documentsService.getDataByDate(functions.formatDate(this.startDate), functions.formatDate(this.endDate))
+    .subscribe((resp?: any) => {
+         /*
+       variables para el filtro de fechas
+      */
+
+       var dataset2 = [];
+
+       let resultadoDates;
+       /*
+       ===================================
+       ===================================
+       */
+        Object.keys(resp).map( (a, index) => {
+          for( var i = 0; i < resp[a].numeroTrabajadoresAfectados.length; i++){
+              if(resp[a].numeroTrabajadoresAfectados[i]['id'] == this.idAfiliado){
+                  /*
+                    FECHAS
+
+                  */
+                    dataset2.push([moment(resp[a].fechaDenuncia).format('YYYY-MM-DD'), resp[a].files.length]);
+                }
+
+              }
+        })
+        resultadoDates = Object.values(dataset2.reduce((c, v) => {
+          if (c[v[0]])
+          {
+            c[v[0]][1] += v[1];     //Add the first element if already exist
+          }
+          else
+          {
+            c[v[0]] = v;                    //Assign the value if does not exist
+          }
+          return c;
+        }, {}));
+
+        for(var k = 0; k < resultadoDates.length; k++){
+          for(var l = 0; l < resultadoDates[k].length; l++){
+            this.dataDates.push(resultadoDates[k].splice(l,1));
+          }
+          this.dataDatesCount.push(resultadoDates[k]);
+        }
+
         this.chartBar = new Chart('barra',{
           type: 'bar',
           data: {
-            labels: dateLabels,
+            labels: this.dataDates,
             datasets: [
               {
-                data: datapoints,
+                data: this.dataDatesCount,
                 backgroundColor: [
                   'rgb(255, 99, 132)',
                   'rgb(54, 162, 235)',
@@ -278,15 +322,25 @@ export class DashboardAfiliadosComponent implements OnInit {
             scales: {
               y:{
                 beginAtZero:true
-              }
+              },
+              x: {
+                stacked: false,
+                reverse: true // ADD THIS LINE
+              },
             }
 
 
           }
         })
-
-    })
-
+    }, err => { console.log(err);})
+  }
+  resetNameValues(){
+    this.dataDates = [];
+    this.dataDatesCount = [];
+    this.startDate = '';
+    this.endDate = '';
+    $('#barra').remove();
+    $('#chartBase').append('<canvas id="barra"></canvas>');
   }
   /* Filtro de busqueda */
   applyFilter(event: Event) {

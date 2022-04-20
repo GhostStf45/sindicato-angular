@@ -22,4 +22,7 @@ export class DocumentsService {
   postData(data: Idocumentos){
     return this.http.post(`${this.api}documentos.json`, data);
   }
+  getDataByDate(startDate: string, endDate: string){
+    return this.http.get(`${this.api}documentos.json?orderBy="fechaDenuncia"&startAt="${startDate}"&endAt="${endDate}"&print=pretty`);
+  }
 }

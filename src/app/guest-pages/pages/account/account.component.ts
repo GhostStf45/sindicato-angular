@@ -110,7 +110,7 @@ export class AccountComponent implements OnInit {
                   if(resp[i].displayName != ""){
                     this.displayName = resp[i].displayName;
                   }
-                  if(resp[i].tipo == "Dirigente" || resp[i].tipo == "Afiliado" ){
+                  if(resp[i].tipo == "Dirigente" || resp[i].tipo == "Afiliado" || resp[i].tipo == "Abogado" ){
                     this.tipo = resp[i].tipo;
                   }else{
                     this.tipo = "Invitado";

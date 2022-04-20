@@ -25,4 +25,9 @@ export class functions {
 		}
 
 	}
+  static formatDate(date : Date){
+
+		return `${date.getFullYear()}-${('0' + date.getMonth()+1).slice(-2)}-${('0'+date.getDate()).slice(-2)}T00:00:00`;
+
+	}
 }

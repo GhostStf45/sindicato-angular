@@ -63,7 +63,7 @@
                     id="InputNombredocumento"
                     placeholder="Nombre del documento"
                     formControlName="nombreDocumento"
-                    [ngClass]="{'is-invalid': invalidField('nombreDocumento') || nombreDocumento.invalid && nombreDocumento.errors?.pattern}"
+                    [ngClass]="{'is-invalid': invalidField('nombreDocumento') || nombreDocumento.invalid  || nombreDocumento.errors?.required}"
               >
               <span class="invalid-feedback" *ngIf="nombreDocumento.invalid && nombreDocumento.errors?.required"> Por favor, ingrese el nombre del documento</span>
               <span class="invalid-feedback" *ngIf="nombreDocumento.invalid && nombreDocumento.errors?.document"> Ya existe el documento</span>
