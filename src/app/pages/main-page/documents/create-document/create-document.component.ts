@@ -79,7 +79,7 @@ export class CreateDocumentComponent implements OnInit{
     nombreDirigente: ['', [Validators.required]],
     nombreDocumento: ['', {
         validators: [Validators.required],
-        asyncValidators:[this.isRepeatDocument()],
+        asyncValidators:[],
         updateOn:'blur'
     }],
     fechaDenuncia: ['', [Validators.required]],

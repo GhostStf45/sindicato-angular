@@ -31,6 +31,7 @@ const routes: Routes = [
 	  component: MainPageComponent,
 	  children: [
 	  	{ path: 'documents', loadChildren: () => import('./main-page/documents/documents.module').then(m=>m.DocumentsModule)},
+      { path: 'articulos', loadChildren: () => import('./main-page/articulos/articulos.module').then(m=>m.ArticulosModule)},
 	  	{ path: 'afiliados', loadChildren: () => import('./main-page/afiliados/afiliados.module').then(m=>m.AfiliadosModule)},
 
 	  ], canActivate: [DirigenteGuard, AuthGuard]

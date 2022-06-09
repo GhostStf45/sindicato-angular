@@ -1,0 +1,153 @@
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Recomendación de articulos segun palabra(s)</h1>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+      <!-- Default box -->
+      <div class="card">
+        <div class="card-header">
+
+          <div [hidden]="loadData" class="row mb-2">
+            <div class="col-12 col-sm-12 col-xl-3 ml-auto mt-2">
+              <input class="form-control" placeholder="Buscar...." (keyup)="applyFilter($event)">
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="mat-table-container">
+            <table [hidden]="loadData" mat-table [dataSource]="dataSource" class="mat-elevation-z8 matTable-table" multiTemplateDataRows matSort >
+
+              <!-- Position Column -->
+              <ng-container matColumnDef="position">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por numero de orden" >
+                  No.
+                </th>
+                <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+              </ng-container>
+
+              <!-- Nombre completo Column -->
+              <ng-container matColumnDef="ARTICULO">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por articulo">
+                  Articulo
+                </th>
+                <td mat-cell *matCellDef="let element"> {{element.ARTICULO}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="CONTENIDO" >
+                <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por contenido">
+                  Contenido
+                </th>
+                <td mat-cell *matCellDef="let element"> {{element.CONTENIDO}} </td>
+              </ng-container>
+              <ng-container matColumnDef="DECRETO">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por decreto">
+                  Decreto
+                </th>
+                <td mat-cell *matCellDef="let element"> {{element.DECRETO}} </td>
+              </ng-container>
+              <ng-container matColumnDef="TIPO" >
+                <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por tipo">
+                  Tipo de ley laboral
+                </th>
+                <td  mat-cell *matCellDef="let element"> {{element.TIPO}} </td>
+              </ng-container>
+              <ng-container matColumnDef="palabras_clave" >
+                <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por Palabras Clave">
+                  Palabras clave
+                </th>
+                <td  mat-cell *matCellDef="let element"> {{element.palabras_clave}} </td>
+              </ng-container>
+              <ng-container matColumnDef="similarity_score" >
+                <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por similitud">
+                  Similitud
+                </th>
+                <td  mat-cell *matCellDef="let element"> {{element.similarity_score}} </td>
+              </ng-container>
+              <!-- Acciones -->
+              <ng-container matColumnDef="acciones">
+                <th mat-header-cell *matHeaderCellDef>
+                 Acciones
+                </th>
+                <td mat-cell *matCellDef="let element">
+                  <button
+                    class="btn btn-sm btn-warning mr-2"
+                    (click)="expandedElement = expandedElement === element ? null : element"
+
+                  ><i class="fa fa-eye"></i></button>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="expandedDetail">
+
+                <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+                  <div class="example-element-detail"
+                       [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                   <ul class="pl-0">
+                     <li class="py-2">
+                       <span class="mx-2 text-muted">.</span>
+                       <strong class="mat-header-cell">Tipo de ley laboral:</strong>
+                       {{element.TIPO}}
+
+                      </li>
+                     <li class="py-2">
+                        <span class="mx-2 text-muted" >.</span>
+                        <strong class="mat-header-cell">Decreto:</strong>
+                        {{element.DECRETO}}
+                      </li>
+                     <li class="py-2">
+                        <span class="mx-2 text-muted">.</span>
+                        <strong class="mat-header-cell">Articulo:</strong>
+                        {{element.ARTICULO}}
+                      </li>
+                      <li class="py-2">
+                        <span class="mx-2 text-muted">.</span>
+                        <strong class="mat-header-cell">Contenido:</strong>
+                        <pre><span>{{element.CONTENIDO}}</span></pre>
+                      </li>
+                   </ul>
+                  </div>
+                </td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let element; columns: displayedColumns;"
+                  class="example-element-row"
+                  [class.example-expanded-row]="expandedElement === element"
+                >
+              </tr>
+              <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+              <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell text-center" colspan="4" [attr.colspan]="displayedColumns.length">No ha encontrado los datos de busqueda.</td>
+              </tr>
+            </table>
+
+            <div *ngIf="loadData" class="text-center m-5">
+              <div  class="spinner-border"></div>
+            </div>
+
+          </div>
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer bg-white">
+          <mat-paginator [hidden]="loadData" [pageSizeOptions]="[5, 10, 20]"
+            showFirstLastButtons
+            aria-label="Seleccione la pagina de afiliados">
+            </mat-paginator>
+        </div>
+        <!-- /.card-footer-->
+      </div>
+      <!-- /.card -->
+
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
