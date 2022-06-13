@@ -178,7 +178,8 @@ export class DashboardAfiliadosComponent implements OnInit {
                   dataset_ = [resp[a].category, resp[a].files.length];
                   dataset1.push([resp[a].category, resp[a].files.length]);
                   for( var j = 0; j < resp[a].files.length; j++){
-                   url1.push( resp[a].files[i]);
+                   url1.push(resp[a].files);
+                   //console.log(url1);
                     this.contador ++ ;
                     // nombreDoc.push(resp[a].nombreDocumento);
                     // categorias1.push(resp[a].category);
@@ -187,7 +188,7 @@ export class DashboardAfiliadosComponent implements OnInit {
                         position: position++,
                         nombreDocumento: resp[a].nombreDocumento,
                         category: resp[a].category,
-                        url: url1[i]['downloadUrl'],
+                        url: url1.map((a, index) => { return a[index]['downloadUrl'];}),
 
                     }))
                     this.dataSource = new MatTableDataSource(this.documentos);
@@ -253,6 +254,7 @@ export class DashboardAfiliadosComponent implements OnInit {
   }
   getDataDocumentsByDate(){
     this.idAfiliado = localStorage.getItem("id");
+
     this.documentsService.getDataByDate(functions.formatDate(this.startDate), functions.formatDate(this.endDate))
     .subscribe((resp?: any) => {
          /*
@@ -267,12 +269,14 @@ export class DashboardAfiliadosComponent implements OnInit {
        ===================================
        */
         Object.keys(resp).map( (a, index) => {
+          console.log(a);
           for( var i = 0; i < resp[a].numeroTrabajadoresAfectados.length; i++){
               if(resp[a].numeroTrabajadoresAfectados[i]['id'] == this.idAfiliado){
                   /*
                     FECHAS
 
                   */
+
                     dataset2.push([moment(resp[a].fechaDenuncia).format('YYYY-MM-DD'), resp[a].files.length]);
                 }
 
